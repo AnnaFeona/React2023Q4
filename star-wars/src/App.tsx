@@ -1,40 +1,34 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '../public/vite.svg';
+import { Component } from 'react';
+
 import './App.scss';
+import { Header } from './components/header/header';
+import { Main } from './components/main/main';
 
-function App() {
-  const [count, setCount] = useState(0);
-  const a = 3;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const b: any = {
-    x: 1,
-    y: 2,
-  };
-  // eslint-disable-next-line no-console
-  console.log(a, b);
+export interface AppProps {
+  a: number;
+  b: string;
+}
 
+export interface AppState {
+  id: string;
+}
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
+class App extends Component {
+  // constructor(props: AppProps) {
+  //   super(props);
+  //   this.state = {
+  //     id: "super",
+  //   }
+  // }
+
+  public render() {
+    return (
+      <>
+        <Header />
+        <Main />
+      </>
+    );
+  }
 }
 
 export default App;
