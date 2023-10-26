@@ -6,10 +6,14 @@ import './App.scss';
 function App() {
   const [count, setCount] = useState(0);
   const a = 3;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const b: any = {
     x: 1,
     y: 2,
   };
+  // eslint-disable-next-line no-console
+  console.log(a, b);
+
 
   return (
     <>
