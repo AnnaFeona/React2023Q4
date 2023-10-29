@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
+import { Component, FormEvent } from 'react';
 import { Callback } from '../../model';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
@@ -28,13 +28,22 @@ export class Search extends Component<SearchProps, SearchState> {
   onSubmit(e: FormEvent) {
     e.preventDefault();
     const { searchRequest } = this.state;
-
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, searchRequest || '');
-    this.props.updateSearchRequest(searchRequest);
+    const dataToSave = this.transformInputValue(searchRequest);
+    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
+    this.props.updateSearchRequest(dataToSave);
   }
 
-  onInput(e: ChangeEvent<HTMLInputElement>) {
-    this.setState({ searchRequest: e.target.value });
+  onInput(e: FormEvent) {
+    const { value } = e.target as HTMLInputElement;
+
+    this.setState({ searchRequest: value });
+  }
+
+  transformInputValue(val: string): string {
+    return val
+      .split(' ')
+      .filter((item) => item.length > 0)
+      .join(' ');
   }
 
   render() {
@@ -43,7 +52,7 @@ export class Search extends Component<SearchProps, SearchState> {
     return (
       <>
         <form onSubmit={(e) => this.onSubmit(e)}>
-          <input type="text" onChange={(e) => this.onInput(e)} value={searchRequest} />
+          <input type="text" onInput={(e) => this.onInput(e)} value={searchRequest} />
           <Button title="Search" type="submit" />
         </form>
       </>

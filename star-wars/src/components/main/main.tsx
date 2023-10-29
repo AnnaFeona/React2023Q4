@@ -7,6 +7,7 @@ import './main.scss';
 export interface MainState {
   searchRequest: string;
   searchResult: SwapiSearch<Person>;
+  isLoading: boolean;
 }
 
 export interface MainProps {
@@ -24,6 +25,7 @@ export class Main extends Component<MainProps, MainState> {
         previous: null,
         results: [],
       },
+      isLoading: false,
     };
   }
 
@@ -34,12 +36,11 @@ export class Main extends Component<MainProps, MainState> {
   }
 
   componentDidMount(): void {
-    // this.getCards();
+    this.getCards();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(prevProps: Readonly<MainProps>, _prevState: Readonly<MainState>): void {
-    if (prevProps.searchRequest !== this.props.searchRequest) {
+  componentDidUpdate(prevProps: Readonly<MainProps>, prevState: Readonly<MainState>): void {
+    if (prevProps.searchRequest !== this.props.searchRequest || prevState.searchRequest != this.state.searchRequest) {
       this.getCards();
     }
   }
@@ -47,28 +48,31 @@ export class Main extends Component<MainProps, MainState> {
   getCards(): void {
     const { searchRequest } = this.state;
 
+    this.setState({ isLoading: true });
+
     fetch(`${this.url}${searchRequest}`)
       .then((res) => res.json())
       .then((people) => {
+        this.setState({ isLoading: false });
         this.setState(() => {
           return { searchResult: people };
         });
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new Error(err.message);
       });
   }
 
   render() {
-    const { searchResult } = this.state;
+    const { searchResult, isLoading } = this.state;
     const { results } = searchResult;
 
     return (
       <>
         <main className="main">
-          {results.map((person) => (
-            <Card person={person} key={person.url} />
-          ))}
+          {/* <h1 className="logo">StarWars</h1> */}
+
+          {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <>Loading...</>}
         </main>
       </>
     );

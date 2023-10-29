@@ -4,18 +4,21 @@ import './App.scss';
 import { Header } from './components/header/header';
 import { Main } from './components/main/main';
 
+interface AppProps {}
+
 interface AppState {
   searchRequest: string;
 }
 
-class App extends Component<object, AppState> {
+class App extends Component<AppProps, AppState> {
   state = {
     searchRequest: '',
   };
 
   updateData(value: string | undefined) {
-    if (!value) return;
-    this.setState({ searchRequest: value });
+    this.setState(() => {
+      return { searchRequest: value || '' };
+    });
   }
 
   public render() {
@@ -23,7 +26,7 @@ class App extends Component<object, AppState> {
     return (
       <>
         <Header updateSearchRequest={(v) => this.updateData(v)} />
-        <Main searchRequest={searchRequest} />
+        <Main searchRequest={searchRequest} key={searchRequest} />
       </>
     );
   }
