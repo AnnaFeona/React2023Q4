@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd star-wars
-npm run lint
+npm run lint:fix
 git add .
