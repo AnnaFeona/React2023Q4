@@ -1,49 +1,75 @@
 import { Component } from 'react';
-import { Person, SwapiURL } from '../../model';
-import { STORAGE_KEY_PREFFIX } from '../../model/constants';
+import { Person, SwapiSearch, SwapiURL } from '../../model';
+import { Card } from '../card/card';
 
-export interface MainProps {
-  // searchResult?: Person[];
-}
+import './main.scss';
 
 export interface MainState {
   searchRequest: string;
-  searchResult: Person[];
+  searchResult: SwapiSearch<Person>;
+}
+
+export interface MainProps {
+  searchRequest: string;
 }
 
 export class Main extends Component<MainProps, MainState> {
-  state = {
-    searchRequest: '',
-    searchResult: [],
-  };
+  constructor(props: MainProps) {
+    super(props);
+    this.state = {
+      searchRequest: props.searchRequest,
+      searchResult: {
+        count: 0,
+        next: null,
+        previous: null,
+        results: [],
+      },
+    };
+  }
 
-  private readonly searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
+  private readonly url = `${SwapiURL.people}?search=`;
 
-  private readonly url  = `${SwapiURL.people}?search=`
+  static getDerivedStateFromProps(props: MainProps) {
+    return { searchRequest: props.searchRequest };
+  }
 
   componentDidMount(): void {
-    const searchRequest = localStorage.getItem(this.searchKey) || '';
-    this.setState({ searchRequest });
+    // this.getCards();
   }
 
-  componentWillUnmount(): void {
-    const { searchRequest } = this.state;
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, searchRequest);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  componentDidUpdate(prevProps: Readonly<MainProps>, _prevState: Readonly<MainState>): void {
+    if (prevProps.searchRequest !== this.props.searchRequest) {
+      this.getCards();
+    }
   }
 
-  getCards() {
+  getCards(): void {
     const { searchRequest } = this.state;
+
     fetch(`${this.url}${searchRequest}`)
       .then((res) => res.json())
-      .then((people) => this.setState({searchResult: people.results}))
-      .then(() => console.log(searchRequest))
-      .catch((err) => console.log(err.message));
+      .then((people) => {
+        this.setState(() => {
+          return { searchResult: people };
+        });
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   render() {
+    const { searchResult } = this.state;
+    const { results } = searchResult;
+
     return (
       <>
-        <main>Cards</main>
+        <main className="main">
+          {results.map((person) => (
+            <Card person={person} key={person.url} />
+          ))}
+        </main>
       </>
     );
   }

@@ -1,0 +1,9 @@
+@use '../../styles/mixins' as mx;
+@use '../../styles/vars' as v;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid v.$dark-primary-color;
+  border-radius: 1rem;
+}

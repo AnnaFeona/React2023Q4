@@ -1,0 +1,8 @@
+@use '../../styles/mixins' as mx;
+@use '../../styles/vars' as v;
+
+.main {
+  @include mx.flex-center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

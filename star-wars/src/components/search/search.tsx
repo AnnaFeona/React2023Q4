@@ -1,39 +1,36 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { Person } from '../../model';
+import { Callback } from '../../model';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 export interface SearchProps {
-  searchResult?: Person[];
+  updateSearchRequest: Callback<string>;
 }
 export interface SearchState {
   searchRequest: string;
 }
 
 export class Search extends Component<SearchProps, SearchState> {
-  state = {
-    searchRequest: '',
-  };
+  constructor(props: SearchProps) {
+    super(props);
+    this.state = {
+      searchRequest: this.getSearchValue(),
+    };
+    this.props.updateSearchRequest(this.state.searchRequest);
+  }
 
   private readonly searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
-  componentDidMount(): void {
-    const searchRequest = localStorage.getItem(this.searchKey);
-    if (!searchRequest) return;
-    this.setState({ searchRequest });
-  }
-
-  componentWillUnmount(): void {
-    const { searchRequest } = this.state;
-    if (!searchRequest) return;
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, searchRequest);
+  getSearchValue(): string {
+    return localStorage.getItem(this.searchKey) || '';
   }
 
   onSubmit(e: FormEvent) {
     e.preventDefault();
     const { searchRequest } = this.state;
-    if (!searchRequest) return;
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, searchRequest);
+
+    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, searchRequest || '');
+    this.props.updateSearchRequest(searchRequest);
   }
 
   onInput(e: ChangeEvent<HTMLInputElement>) {
@@ -42,6 +39,7 @@ export class Search extends Component<SearchProps, SearchState> {
 
   render() {
     const { searchRequest } = this.state;
+
     return (
       <>
         <form onSubmit={(e) => this.onSubmit(e)}>

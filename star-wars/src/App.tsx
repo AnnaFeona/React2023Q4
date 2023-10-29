@@ -4,12 +4,26 @@ import './App.scss';
 import { Header } from './components/header/header';
 import { Main } from './components/main/main';
 
-class App extends Component {
+interface AppState {
+  searchRequest: string;
+}
+
+class App extends Component<object, AppState> {
+  state = {
+    searchRequest: '',
+  };
+
+  updateData(value: string | undefined) {
+    if (!value) return;
+    this.setState({ searchRequest: value });
+  }
+
   public render() {
+    const { searchRequest } = this.state;
     return (
       <>
-        <Header />
-        <Main />
+        <Header updateSearchRequest={(v) => this.updateData(v)} />
+        <Main searchRequest={searchRequest} />
       </>
     );
   }
