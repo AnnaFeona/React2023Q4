@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Person, SwapiSearch, SwapiURL } from '../../model';
 import { Card } from '../card/card';
+import { Loader } from '../loader/loader';
 
 import './main.scss';
 
@@ -73,7 +74,7 @@ export class Main extends Component<MainProps, MainState> {
           <h1 className="logo">StarWars</h1>
           <div className="container">
             {!results.length && !isLoading ? 'Not found :(' : ''}
-            {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <>Loading...</>}
+            {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <Loader />}
           </div>
         </main>
       </>
