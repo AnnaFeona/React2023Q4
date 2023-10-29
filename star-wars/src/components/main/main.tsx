@@ -70,9 +70,11 @@ export class Main extends Component<MainProps, MainState> {
     return (
       <>
         <main className="main">
-          {/* <h1 className="logo">StarWars</h1> */}
-
-          {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <>Loading...</>}
+          <h1 className="logo">StarWars</h1>
+          <div className="container">
+            {!results.length && !isLoading ? 'Not found :(' : ''}
+            {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <>Loading...</>}
+          </div>
         </main>
       </>
     );

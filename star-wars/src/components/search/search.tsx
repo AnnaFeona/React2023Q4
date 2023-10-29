@@ -3,6 +3,8 @@ import { Callback } from '../../model';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
+import './search.scss';
+
 export interface SearchProps {
   updateSearchRequest: Callback<string>;
 }
@@ -51,8 +53,14 @@ export class Search extends Component<SearchProps, SearchState> {
 
     return (
       <>
-        <form onSubmit={(e) => this.onSubmit(e)}>
-          <input type="text" onInput={(e) => this.onInput(e)} value={searchRequest} />
+        <form onSubmit={(e) => this.onSubmit(e)} className="header_form">
+          <input
+            className="search__input"
+            type="text"
+            onInput={(e) => this.onInput(e)}
+            value={searchRequest}
+            placeholder="What ars you looking for?"
+          />
           <Button title="Search" type="submit" />
         </form>
       </>

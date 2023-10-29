@@ -1,8 +1,9 @@
 import { Component } from 'react';
 
-import './header.scss';
 import { Search } from '../search/search';
 import { Callback } from '../../model';
+
+import './header.scss';
 
 export interface HeaderProps {
   updateSearchRequest: Callback<string>;
