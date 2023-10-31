@@ -1,0 +1,21 @@
+@use '../../styles/mixins' as mx;
+@use '../../styles/vars' as v;
+
+.main {
+  @include mx.wrapper(80%);
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}

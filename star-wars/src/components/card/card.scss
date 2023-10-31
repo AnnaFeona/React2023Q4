@@ -1,0 +1,27 @@
+@use '../../styles/mixins' as mx;
+@use '../../styles/vars' as v;
+
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  border: 1px solid v.$dark-primary-color;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.card_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card_photo {
+  display: flex;
+  border-radius: 0.5rem;
+  width: 220px;
+  height: 280px;
+
+  background-image: url(../../assets/placeholder.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
