@@ -2,7 +2,7 @@
 
 ### [task](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01)
 
-### [deploy]()
+### [deploy](https://annafeona-rs-react-star-wars.netlify.app/)
 
 ### Stack:
 
