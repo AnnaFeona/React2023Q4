@@ -36,7 +36,7 @@ To get started with this project, follow these steps:
    ```
 3. Go to the project directory:
    ```bash
-   $ cd React2023Q4/start-wars
+   $ cd React2023Q4/star-wars
    ```
 4. Install the project dependencies (Node.js must be installed):
    ```bash
