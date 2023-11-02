@@ -10,6 +10,7 @@ export interface SearchProps {
 }
 export interface SearchState {
   searchRequest: string;
+  hasError: boolean;
 }
 
 export class Search extends Component<SearchProps, SearchState> {
@@ -17,6 +18,7 @@ export class Search extends Component<SearchProps, SearchState> {
     super(props);
     this.state = {
       searchRequest: this.getSearchValue(),
+      hasError: false,
     };
     this.props.updateSearchRequest(this.state.searchRequest);
   }
@@ -46,6 +48,10 @@ export class Search extends Component<SearchProps, SearchState> {
       .split(' ')
       .filter((item) => item.length > 0)
       .join(' ');
+  }
+
+  generateError() {
+    throw new Error('Error boundary works!');
   }
 
   render() {
