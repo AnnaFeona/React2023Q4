@@ -1,19 +1,18 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Callback } from '../../model';
+import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
 
 export interface SearchProps {
-  updateSearchRequest: Callback<string>;
+  onSearch: Dispatch<SetStateAction<string>>;
 }
 
-export const Search: FC<SearchProps> = ({ updateSearchRequest }) => {
+export const Search: FC<SearchProps> = ({ onSearch }) => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
-  const [searchRequest, setSearchRequest] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const [searchRequest, setSearchRequest] = useState('');
 
   useEffect(() => {
     getSearchValue();
@@ -21,7 +20,7 @@ export const Search: FC<SearchProps> = ({ updateSearchRequest }) => {
   }, []);
 
   useEffect(() => {
-    updateSearchRequest(searchRequest);
+    onSearch(searchRequest);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchRequest]);
 
@@ -31,14 +30,14 @@ export const Search: FC<SearchProps> = ({ updateSearchRequest }) => {
     setSearchRequest(value);
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const saveSearchValue = (e: FormEvent) => {
     e.preventDefault();
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
     setSearchRequest(dataToSave);
   };
 
-  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value || '');
   };
@@ -52,11 +51,11 @@ export const Search: FC<SearchProps> = ({ updateSearchRequest }) => {
 
   return (
     <>
-      <form onSubmit={onSubmit} className="header_form">
+      <form onSubmit={saveSearchValue} className="header_form">
         <input
           className="search__input"
           type="text"
-          onChange={onInput}
+          onChange={handleChanges}
           value={searchValue}
           placeholder="What ars you looking for?"
         />

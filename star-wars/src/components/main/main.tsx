@@ -19,6 +19,7 @@ export const Main: FC<MainProps> = ({ searchRequest }) => {
 
   useEffect(() => {
     getCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCards = (): void => {

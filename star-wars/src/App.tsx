@@ -9,7 +9,7 @@ const App: FC = () => {
 
   return (
     <>
-      <Header updateSearchRequest={setSearchRequest} />
+      <Header updateSearch={setSearchRequest} />
       <Main searchRequest={searchRequest} key={searchRequest} />
     </>
   );
