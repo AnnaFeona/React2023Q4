@@ -1,4 +1,4 @@
-import { Component, FormEvent } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { Callback } from '../../model';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
@@ -8,68 +8,60 @@ import './search.scss';
 export interface SearchProps {
   updateSearchRequest: Callback<string>;
 }
-export interface SearchState {
-  searchRequest: string;
-  hasError: boolean;
-}
 
-export class Search extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      searchRequest: this.getSearchValue(),
-      hasError: false,
-    };
-    this.props.updateSearchRequest(this.state.searchRequest);
-  }
+export const Search: FC<SearchProps> = ({ updateSearchRequest }) => {
+  const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
-  private readonly searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
+  const [searchRequest, setSearchRequest] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-  getSearchValue(): string {
-    return localStorage.getItem(this.searchKey) || '';
-  }
+  useEffect(() => {
+    getSearchValue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  onSubmit(e: FormEvent) {
+  useEffect(() => {
+    updateSearchRequest(searchRequest);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchRequest]);
+
+  const getSearchValue = () => {
+    const value = localStorage.getItem(searchKey) || '';
+    setSearchValue(value);
+    setSearchRequest(value);
+  };
+
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const { searchRequest } = this.state;
-    const dataToSave = this.transformInputValue(searchRequest);
+    const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
-    this.props.updateSearchRequest(dataToSave);
-  }
+    setSearchRequest(dataToSave);
+  };
 
-  onInput(e: FormEvent) {
-    const { value } = e.target as HTMLInputElement;
+  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchValue(value || '');
+  };
 
-    this.setState({ searchRequest: value });
-  }
-
-  transformInputValue(val: string): string {
+  const transformInputValue = (val: string) => {
     return val
       .split(' ')
       .filter((item) => item.length > 0)
       .join(' ');
-  }
+  };
 
-  generateError() {
-    throw new Error('Error boundary works!');
-  }
-
-  render() {
-    const { searchRequest } = this.state;
-
-    return (
-      <>
-        <form onSubmit={(e) => this.onSubmit(e)} className="header_form">
-          <input
-            className="search__input"
-            type="text"
-            onInput={(e) => this.onInput(e)}
-            value={searchRequest}
-            placeholder="What ars you looking for?"
-          />
-          <Button title="Search" type="submit" />
-        </form>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <form onSubmit={onSubmit} className="header_form">
+        <input
+          className="search__input"
+          type="text"
+          onChange={onInput}
+          value={searchValue}
+          placeholder="What ars you looking for?"
+        />
+        <Button title="Search" type="submit" />
+      </form>
+    </>
+  );
+};

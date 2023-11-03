@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { FC } from 'react';
 import { Callback } from '../../model';
 
 import './button.scss';
@@ -10,15 +10,12 @@ export interface ButtonProps<T = unknown> {
   onClick?: Callback<T>;
 }
 
-export class Button extends Component<ButtonProps> {
-  render() {
-    const { title, className, onClick } = this.props;
-    return (
-      <>
-        <button className={className} onClick={onClick}>
-          {title}
-        </button>
-      </>
-    );
-  }
-}
+export const Button: FC<ButtonProps> = ({ title, className, onClick }) => {
+  return (
+    <>
+      <button className={className} onClick={onClick}>
+        {title}
+      </button>
+    </>
+  );
+};

@@ -1,83 +1,49 @@
-import { Component } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Person, SwapiSearch, SwapiURL } from '../../model';
 import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import './main.scss';
 
-export interface MainState {
-  searchRequest: string;
-  searchResult: SwapiSearch<Person>;
-  isLoading: boolean;
-}
-
 export interface MainProps {
   searchRequest: string;
 }
 
-export class Main extends Component<MainProps, MainState> {
-  constructor(props: MainProps) {
-    super(props);
-    this.state = {
-      searchRequest: props.searchRequest,
-      searchResult: {
-        count: 0,
-        next: null,
-        previous: null,
-        results: [],
-      },
-      isLoading: false,
-    };
-  }
+export const Main: FC<MainProps> = ({ searchRequest }) => {
+  const [searchValue] = useState(searchRequest);
+  const [searchResult, setSearchResult] = useState<SwapiSearch<Person> | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const results = searchResult?.results || [];
 
-  private readonly url = `${SwapiURL.people}?search=`;
+  const url = `${SwapiURL.people}?search=`;
 
-  static getDerivedStateFromProps(props: MainProps) {
-    return { searchRequest: props.searchRequest };
-  }
+  useEffect(() => {
+    getCards();
+  }, []);
 
-  componentDidMount(): void {
-    this.getCards();
-  }
+  const getCards = (): void => {
+    setLoading(true);
 
-  componentDidUpdate(prevProps: Readonly<MainProps>, prevState: Readonly<MainState>): void {
-    if (prevProps.searchRequest !== this.props.searchRequest || prevState.searchRequest != this.state.searchRequest) {
-      this.getCards();
-    }
-  }
-
-  getCards(): void {
-    const { searchRequest } = this.state;
-
-    this.setState({ isLoading: true });
-
-    fetch(`${this.url}${searchRequest}`)
+    fetch(`${url}${searchValue}`)
       .then((res) => res.json())
       .then((people) => {
-        this.setState({ isLoading: false });
-        this.setState(() => {
-          return { searchResult: people };
-        });
+        setLoading(false);
+        setSearchResult(people);
       })
       .catch((err) => {
         throw new Error(err.message);
       });
-  }
+  };
 
-  render() {
-    const { searchResult, isLoading } = this.state;
-    const { results } = searchResult;
-
-    return (
-      <>
-        <main className="main">
-          <h1 className="logo">StarWars</h1>
-          <div className="container">
-            {!results.length && !isLoading ? 'Not found :(' : ''}
-            {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <Loader />}
-          </div>
-        </main>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <main className="main">
+        <h1 className="logo">StarWars</h1>
+        <div className="container">
+          {!results || (!results.length && !isLoading) ? 'Not found :(' : ''}
+          {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <Loader />}
+        </div>
+      </main>
+    </>
+  );
+};
