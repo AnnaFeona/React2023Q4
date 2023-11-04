@@ -1,40 +1,34 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
+import { useNavigate } from 'react-router-dom';
 
-export interface SearchProps {
-  onSearch: Dispatch<SetStateAction<string>>;
-}
-
-export const Search: FC<SearchProps> = ({ onSearch }) => {
+export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
+  // const [, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState('');
-  const [searchRequest, setSearchRequest] = useState('');
 
   useEffect(() => {
     getSearchValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    onSearch(searchRequest);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchRequest]);
+  const navigate = useNavigate();
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     setSearchValue(value);
-    setSearchRequest(value);
   };
 
   const saveSearchValue = (e: FormEvent) => {
     e.preventDefault();
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
-    setSearchRequest(dataToSave);
+    // setSearchParams({search: dataToSave});
+    navigate(`/?search=${dataToSave}`, { replace: true });
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {

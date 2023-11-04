@@ -1,26 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState } from 'react';
 import { Person, SwapiSearch, SwapiURL } from '../../model';
-import { Card } from '../card/card';
-import { Loader } from '../loader/loader';
+import { Card } from '../../components/card/card';
+import { Loader } from '../../components/loader/loader';
 
 import './main.scss';
+import { useSearchParams } from 'react-router-dom';
 
-export interface MainProps {
-  searchRequest: string;
-}
-
-export const Main: FC<MainProps> = ({ searchRequest }) => {
-  const [searchValue] = useState(searchRequest);
+export const Main: FC = () => {
+  const [searchParams] = useSearchParams();
   const [searchResult, setSearchResult] = useState<SwapiSearch<Person> | null>(null);
   const [isLoading, setLoading] = useState(false);
   const results = searchResult?.results || [];
 
   const url = `${SwapiURL.people}?search=`;
+  const searchValue = searchParams.get('search') || '';
 
   useEffect(() => {
     getCards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getCards();
+  }, [searchParams]);
 
   const getCards = (): void => {
     setLoading(true);

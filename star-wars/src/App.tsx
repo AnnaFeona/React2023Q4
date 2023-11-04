@@ -1,16 +1,27 @@
-import { FC, useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { FC } from 'react';
+
+import { Main } from './pages/main/main';
+import { Details } from './pages/details/details';
+
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 import './App.scss';
-import { Header } from './components/header/header';
-import { Main } from './components/main/main';
+import { RootLayout } from './Layout/rootLayout';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<Main />} />
+      <Route path="details:id" element={<Details />} />
+    </Route>,
+  ),
+);
 
 const App: FC = () => {
-  const [searchRequest, setSearchRequest] = useState('');
-
   return (
     <>
-      <Header updateSearch={setSearchRequest} />
-      <Main searchRequest={searchRequest} key={searchRequest} />
+      <RouterProvider router={router} />
     </>
   );
 };
