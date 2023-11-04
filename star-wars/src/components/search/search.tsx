@@ -21,7 +21,7 @@ export const Search: FC = () => {
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
-    if (location.pathname === '/') {
+    if (location.pathname === '/' && value !== '') {
       setSearchParams({ people: value });
     }
     setSearchValue(value);

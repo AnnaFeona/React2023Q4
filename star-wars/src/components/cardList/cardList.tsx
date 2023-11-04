@@ -18,6 +18,7 @@ export const CardList: FC<CardlistProps> = ({ request }) => {
 
   useEffect(() => {
     getCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCards = (): void => {

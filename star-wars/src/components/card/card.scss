@@ -25,3 +25,9 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.card__btn {
+  max-width: 220px;
+}
+.card__btn:hover {
+  background-color: v.$accent-color;
+}
