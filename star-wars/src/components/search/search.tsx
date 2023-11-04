@@ -3,12 +3,13 @@ import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
   const [, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
@@ -20,8 +21,9 @@ export const Search: FC = () => {
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
-    setSearchParams({ people: value });
-    // navigate(`/?people=${value}`);
+    if (location.pathname === '/') {
+      setSearchParams({ people: value });
+    }
     setSearchValue(value);
   };
 
@@ -29,7 +31,6 @@ export const Search: FC = () => {
     e.preventDefault();
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
-    // setSearchParams({search: dataToSave});
     navigate(`/?people=${dataToSave}`, { replace: true });
   };
 
