@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 import { CardList } from '../../components/cardList/cardList.tsx';
 
@@ -17,9 +17,15 @@ export const Main: FC = () => {
 
   return (
     <>
-      <h1 className="logo">StarWars</h1>
-      <Pagination searchValue={searchValue} key={`p${searchValue}`} />
-      <CardList request={searchRequest} key={`cl${searchRequest}`} />
+      <div className="page">
+        <Outlet />
+
+        <div className="main-layout">
+          <h1 className="logo">StarWars</h1>
+          <Pagination searchValue={searchValue} key={`p${searchValue}`} />
+          <CardList request={searchRequest} key={`cl${searchRequest}`} />
+        </div>
+      </div>
     </>
   );
 };

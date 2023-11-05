@@ -68,11 +68,18 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   };
 
   const saveChanges = () => {
+    // if (!searchValue) {
+    //   setSearchParams({
+    //     page: currentPage.toString(),
+    //     per_page: limit.toString(),
+    //   });
+    // } else {
     setSearchParams({
       beer_name: searchValue,
       page: currentPage.toString(),
       per_page: limit.toString(),
     });
+    // }
   };
 
   return (

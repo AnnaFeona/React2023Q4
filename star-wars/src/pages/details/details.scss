@@ -1,0 +1,35 @@
+.details__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: black;
+  opacity: 0.3;
+  backdrop-filter: blur(2px);
+}
+
+.details__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 50%;
+  z-index: 10;
+  position: relative;
+}
+
+.details__card {
+  max-width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: fixed;
+  top: 0;
+}
+
+.details__image {
+  height: 30vh;
+  object-fit: contain;
+}

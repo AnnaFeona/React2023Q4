@@ -33,7 +33,7 @@ export const Search: FC = () => {
 
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
-    navigate(updateSearchString(dataToSave.join('_')));
+    navigate(updateSearchString(dataToSave.join('_')), { replace: true });
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
