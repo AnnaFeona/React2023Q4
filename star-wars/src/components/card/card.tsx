@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import { FC } from 'react';
 import { Beer } from '../../model';
 
@@ -12,7 +10,6 @@ export interface CardProps {
 }
 export const Card: FC<CardProps> = ({ beer }) => {
   const { id, name, description, image_url } = beer;
-  // const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleClick = () => {

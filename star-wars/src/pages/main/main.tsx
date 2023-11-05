@@ -1,19 +1,29 @@
-import { FC } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 
 import { CardList } from '../../components/cardList/cardList.tsx';
 
 import './main.scss';
 import { Pagination } from '../../components/pagination/pagination.tsx';
-import { updateSearchString } from '../../utils/index.ts';
 
 export const Main: FC = () => {
+  const location = useLocation();
   const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get('beer_name') || '';
-  const currentPage = searchParams.get('page') || '';
-  const limitPages = searchParams.get('per_page') || '';
+  const [searchValue, setSearchValue] = useState('');
+  const [searchRequest, setSearchRequest] = useState('');
 
-  const searchRequest = updateSearchString(searchValue, currentPage, limitPages);
+  useEffect(() => {
+    setSearchRequest(location.search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setSearchValue(searchParams.get('beer_name') || '');
+    if (location.pathname === '/') {
+      setSearchRequest(location.search);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   return (
     <>

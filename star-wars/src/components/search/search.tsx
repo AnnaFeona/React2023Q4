@@ -3,8 +3,8 @@ import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { transformInputValue, updateSearchString } from '../../utils';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { transformInputValue } from '../../utils';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
@@ -17,8 +17,6 @@ export const Search: FC = () => {
     getSearchValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const navigate = useNavigate();
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
@@ -33,7 +31,7 @@ export const Search: FC = () => {
 
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
-    navigate(updateSearchString(dataToSave.join('_')), { replace: true });
+    setSearchParams({ beer_name: dataToSave.join('_') });
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +49,7 @@ export const Search: FC = () => {
           value={searchValue}
           placeholder="What ars you looking for?"
         />
-        <Button title="Search" type="submit" />
+        <Button title="Search" type="submit" disabled={!searchValue} />
       </form>
     </>
   );

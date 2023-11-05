@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import './pagination.scss';
 import { Button } from '../button/button';
 import { Select } from '../select/select';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
 
 interface PaginationProps {
@@ -17,6 +17,7 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const [totalItems, setTotalItems] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const location = useLocation();
 
   useEffect(() => {
     getTotalItems();
@@ -68,18 +69,21 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   };
 
   const saveChanges = () => {
-    // if (!searchValue) {
-    //   setSearchParams({
-    //     page: currentPage.toString(),
-    //     per_page: limit.toString(),
-    //   });
-    // } else {
-    setSearchParams({
-      beer_name: searchValue,
-      page: currentPage.toString(),
-      per_page: limit.toString(),
-    });
-    // }
+    if (location.pathname === '/') {
+      if (searchValue !== '') {
+        console.log(searchValue);
+        setSearchParams({
+          beer_name: searchValue,
+          page: currentPage.toString(),
+          per_page: limit.toString(),
+        });
+      } else {
+        setSearchParams({
+          page: currentPage.toString(),
+          per_page: limit.toString(),
+        });
+      }
+    }
   };
 
   return (
@@ -87,11 +91,11 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
       <h3>{totalItems} found</h3>
       <div className="pagination__container">
         <div className="pagination__nav">
-          <Button title="Prev" onClick={toPrevPage} />
-          <div>
+          <Button title="Prev" onClick={toPrevPage} disabled={currentPage === 1} />
+          <div className="pagination__index">
             {currentPage} of {totalPages}
           </div>
-          <Button title="Next" onClick={toNextPage} />
+          <Button title="Next" onClick={toNextPage} disabled={currentPage === totalPages} />
         </div>
         <div className="pagination__select">
           <Select limit={limit} onSelect={setLimit} />

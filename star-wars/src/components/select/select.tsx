@@ -14,7 +14,7 @@ export const Select: FC<SelectProps> = ({ onSelect, limit }) => {
 
   return (
     <>
-      <select defaultValue={limit} onChange={handleSelect}>
+      <select className="select" defaultValue={limit} onChange={handleSelect}>
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="25">25</option>

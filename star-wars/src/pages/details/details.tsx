@@ -13,6 +13,7 @@ export const Details: FC = () => {
 
   useEffect(() => {
     getDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDetails = () => {

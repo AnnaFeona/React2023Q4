@@ -1,17 +1,6 @@
 /* eslint-disable no-unused-vars */
 export type Callback<T = unknown, K = void> = (data?: T) => K;
 
-// export enum SwapiURL {
-//   films = 'https://swapi.dev/api/films/',
-//   people = 'https://swapi.dev/api/people/',
-//   planets = 'https://swapi.dev/api/planets/',
-//   species = 'https://swapi.dev/api/species/',
-//   starships = 'https://swapi.dev/api/starships/',
-//   vehicles = 'https://swapi.dev/api/vehicles/',
-// }
-
-// type Gender = 'male' | 'female' | 'n/a' | 'unknown';
-
 export interface Beer {
   id: number;
   name: string;
@@ -109,10 +98,3 @@ export interface Beer {
     'Strawberry and rhubarb pie',
   ];
 }
-
-// export interface SwapiSearch<T> {
-//   count: number;
-//   next: string | null;
-//   previous: string | null;
-//   results: T[];
-// }

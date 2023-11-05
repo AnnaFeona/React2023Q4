@@ -7,13 +7,14 @@ export interface ButtonProps<T = unknown> {
   className?: string;
   title: string;
   type?: string;
+  disabled?: boolean;
   onClick?: Callback<T>;
 }
 
-export const Button: FC<ButtonProps> = ({ title, className, onClick }) => {
+export const Button: FC<ButtonProps> = ({ title, className, disabled, onClick }) => {
   return (
     <>
-      <button className={className} onClick={onClick}>
+      <button className={className} onClick={onClick} disabled={disabled}>
         {title}
       </button>
     </>
