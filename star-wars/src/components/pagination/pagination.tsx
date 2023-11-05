@@ -4,8 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import './pagination.scss';
 import { Button } from '../button/button';
 import { Select } from '../select/select';
-import { useNavigate } from 'react-router-dom';
-import { updateSearchString } from '../../utils';
+import { useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
 
 interface PaginationProps {
@@ -13,12 +12,11 @@ interface PaginationProps {
 }
 
 export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
+  const [, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getTotalItems();
@@ -32,13 +30,13 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
 
   useEffect(() => {
     getTotalPages();
-    navigate(updateSearchString(searchValue, currentPage, limit));
+    saveChanges();
   }, [totalItems, currentPage]);
 
   useEffect(() => {
     getTotalPages();
     setCurrentPage(1);
-    navigate(updateSearchString(searchValue, 1, limit));
+    saveChanges();
   }, [limit]);
 
   const toPrevPage = () => {
@@ -53,7 +51,8 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   };
 
   const getTotalItems = () => {
-    fetch(`${API_BASE_URL}?beer_name=${searchValue}&per_page=80`)
+    const url = searchValue ? `?beer_name=${searchValue}&per_page=80` : '';
+    fetch(`${API_BASE_URL}${url}`)
       .then((res) => res.json())
       .then((beer) => {
         setTotalItems(beer.length);
@@ -66,6 +65,14 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const getTotalPages = () => {
     const pages = Math.ceil(totalItems / limit);
     setTotalPages(pages);
+  };
+
+  const saveChanges = () => {
+    setSearchParams({
+      beer_name: searchValue,
+      page: currentPage.toString(),
+      per_page: limit.toString(),
+    });
   };
 
   return (

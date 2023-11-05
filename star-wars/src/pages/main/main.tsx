@@ -18,8 +18,8 @@ export const Main: FC = () => {
   return (
     <>
       <h1 className="logo">StarWars</h1>
-      <Pagination searchValue={searchValue} key={searchValue} />
-      <CardList request={searchRequest} key={searchRequest} />
+      <Pagination searchValue={searchValue} key={`p${searchValue}`} />
+      <CardList request={searchRequest} key={`cl${searchRequest}`} />
     </>
   );
 };

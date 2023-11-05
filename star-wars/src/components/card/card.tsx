@@ -5,17 +5,19 @@ import { Beer } from '../../model';
 
 import './card.scss';
 import { Button } from '../button/button';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export interface CardProps {
   beer: Beer;
 }
 export const Card: FC<CardProps> = ({ beer }) => {
   const { id, name, description, image_url } = beer;
-  const [, setSearchParams] = useSearchParams();
+  // const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     console.log(image_url, id);
+    navigate(`/details/${id}`);
   };
 
   return (

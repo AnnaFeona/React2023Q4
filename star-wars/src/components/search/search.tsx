@@ -23,17 +23,17 @@ export const Search: FC = () => {
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     if (location.pathname === '/' && value !== '') {
-      setSearchParams({ beer_name: transformInputValue(value) });
+      setSearchParams({ beer_name: value });
     }
     setSearchValue(value);
   };
 
   const saveSearchValue = (e: FormEvent) => {
     e.preventDefault();
+
     const dataToSave = transformInputValue(searchValue);
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.split('_').join(' '));
-    const searchString = dataToSave;
-    navigate(updateSearchString(searchString), { replace: true });
+    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
+    navigate(updateSearchString(dataToSave.join('_')));
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
