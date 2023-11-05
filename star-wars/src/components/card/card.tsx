@@ -29,7 +29,9 @@ export const Card: FC<CardProps> = ({ beer }) => {
           </div>
           <Button title="Show details" className="card__btn" onClick={handleClick} />
         </div>
-        <div className="card_photo" style={{ backgroundImage: `url${image_url}` }}></div>
+        <div className="card_photo">
+          <img className="card__image" src={image_url} alt="" />
+        </div>
       </div>
     </>
   );

@@ -13,22 +13,24 @@
 .card_info {
   display: flex;
   flex-direction: column;
-  max-width: 45%;
+  width: 50%;
 }
 
 .card_photo {
+  @include mx.flex-center;
   display: flex;
-  border-radius: 0.5rem;
-  width: 220px;
-  height: 280px;
-
-  background-image: url(../../assets/placeholder.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  width: 50%;
 }
+
+.card__image {
+  height: 30vh;
+  object-fit: contain;
+}
+
 .card__btn {
   max-width: 220px;
 }
+
 .card__btn:hover {
   background-color: v.$accent-color;
 }

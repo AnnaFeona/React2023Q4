@@ -21,7 +21,7 @@ export const Main: FC = () => {
         <Outlet />
 
         <div className="main-layout">
-          <h1 className="logo">StarWars</h1>
+          <h1 className="logo">ColdBeer</h1>
           <Pagination searchValue={searchValue} key={`p${searchValue}`} />
           <CardList request={searchRequest} key={`cl${searchRequest}`} />
         </div>
