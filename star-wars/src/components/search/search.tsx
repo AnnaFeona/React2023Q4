@@ -4,6 +4,7 @@ import { Button } from '../button/button';
 
 import './search.scss';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { transformInputValue, updateSearchString } from '../../utils';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
@@ -22,7 +23,7 @@ export const Search: FC = () => {
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     if (location.pathname === '/' && value !== '') {
-      setSearchParams({ people: value });
+      setSearchParams({ beer_name: transformInputValue(value) });
     }
     setSearchValue(value);
   };
@@ -30,20 +31,14 @@ export const Search: FC = () => {
   const saveSearchValue = (e: FormEvent) => {
     e.preventDefault();
     const dataToSave = transformInputValue(searchValue);
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave);
-    navigate(`/?people=${dataToSave}`, { replace: true });
+    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.split('_').join(' '));
+    const searchString = dataToSave;
+    navigate(updateSearchString(searchString), { replace: true });
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value || '');
-  };
-
-  const transformInputValue = (val: string) => {
-    return val
-      .split(' ')
-      .filter((item) => item.length > 0)
-      .join(' ');
   };
 
   return (

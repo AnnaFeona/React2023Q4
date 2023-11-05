@@ -1,0 +1,17 @@
+.pagination__container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pagination__nav {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+.pagination__select {
+  display: flex;
+  width: 20%;
+}

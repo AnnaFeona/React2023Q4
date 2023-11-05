@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { SwapiSearch, Person, SwapiURL } from '../../model';
+import { Beer } from '../../model';
 import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import './cardList.scss';
+import { API_BASE_URL } from '../../model/constants';
 
 interface CardlistProps {
   request: string;
@@ -11,10 +12,9 @@ interface CardlistProps {
 
 export const CardList: FC<CardlistProps> = ({ request }) => {
   const [isLoading, setLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState<SwapiSearch<Person> | null>(null);
+  const [searchResult, setSearchResult] = useState<Beer[] | null>(null);
 
-  const url = `${SwapiURL.people}?search=`;
-  const results = searchResult?.results || [];
+  const results = searchResult || [];
 
   useEffect(() => {
     getCards();
@@ -24,11 +24,11 @@ export const CardList: FC<CardlistProps> = ({ request }) => {
   const getCards = (): void => {
     setLoading(true);
 
-    fetch(`${url}${request}`)
+    fetch(`${API_BASE_URL}${request}`)
       .then((res) => res.json())
-      .then((people) => {
+      .then((beer) => {
         setLoading(false);
-        setSearchResult(people);
+        setSearchResult(beer);
       })
       .catch((err) => {
         throw new Error(err.message);
@@ -39,7 +39,7 @@ export const CardList: FC<CardlistProps> = ({ request }) => {
     <>
       <div className="container">
         {!results || (!results.length && !isLoading) ? 'Not found :(' : ''}
-        {!isLoading ? results.map((person) => <Card person={person} key={person.url} />) : <Loader />}
+        {!isLoading ? results.map((item) => <Card beer={item} key={item.id} />) : <Loader />}
       </div>
     </>
   );

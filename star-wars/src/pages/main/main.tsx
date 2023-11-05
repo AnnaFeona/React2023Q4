@@ -4,15 +4,22 @@ import { useSearchParams } from 'react-router-dom';
 import { CardList } from '../../components/cardList/cardList.tsx';
 
 import './main.scss';
+import { Pagination } from '../../components/pagination/pagination.tsx';
+import { updateSearchString } from '../../utils/index.ts';
 
 export const Main: FC = () => {
   const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get('people') || '';
+  const searchValue = searchParams.get('beer_name') || '';
+  const currentPage = searchParams.get('page') || '';
+  const limitPages = searchParams.get('per_page') || '';
+
+  const searchRequest = updateSearchString(searchValue, currentPage, limitPages);
 
   return (
     <>
       <h1 className="logo">StarWars</h1>
-      <CardList request={searchValue} key={searchValue} />
+      <Pagination searchValue={searchValue} key={searchValue} />
+      <CardList request={searchRequest} key={searchRequest} />
     </>
   );
 };
