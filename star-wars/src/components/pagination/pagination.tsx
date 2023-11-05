@@ -71,7 +71,6 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const saveChanges = () => {
     if (location.pathname === '/') {
       if (searchValue !== '') {
-        console.log(searchValue);
         setSearchParams({
           beer_name: searchValue,
           page: currentPage.toString(),
