@@ -5,9 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
 import { Button } from '../../components/button/button';
 import { Beer } from '../../model';
+import { Loader } from '../../components/loader/loader';
 
 export const Details: FC = () => {
   const [card, setCard] = useState<Beer | null>(null);
+  const [isLoading, setLoading] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ export const Details: FC = () => {
 
   const getDetails = () => {
     const url = `/${id}`;
+    setLoading(true);
     fetch(`${API_BASE_URL}${url}`)
       .then((res) => res.json())
       .then((beer) => {
@@ -25,27 +28,34 @@ export const Details: FC = () => {
       })
       .catch((err) => {
         throw new Error(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const goBack = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (
     <>
       <div className="details__container">
-        <div className="details__card">
-          {card && (
-            <>
-              <h2>{card.name}</h2>
-              <div className="card__description">{card.description}</div>
-              <img className="details__image" src={card.image_url} alt="" />
-            </>
-          )}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="details__card">
+            {card && (
+              <>
+                <h2>{card.name}</h2>
+                <div className="card__description">{card.description}</div>
+                <img className="details__image" src={card.image_url} alt="" />
+              </>
+            )}
 
-          <Button title="Close" onClick={goBack} />
-        </div>
+            <Button title="Close" onClick={goBack} />
+          </div>
+        )}
       </div>
       <div className="details__bg" onClick={goBack} role="presentation"></div>
     </>

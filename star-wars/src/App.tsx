@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { FC } from 'react';
 
 import { Main } from './pages/main/main';
