@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { Route, RouterProvider, createMemoryRouter, createRoutesFromElements } from 'react-router-dom';
-import { RootLayout } from './Layout/rootLayout';
-import { Details } from './pages/details/details';
-import { Main } from './pages/main/main';
-import { NotFoundPage } from './pages/notFound/notFoundPage';
+import { RootLayout } from '../layout/rootLayout';
+import { Details } from '../pages/details/details';
+import { Main } from '../pages/main/main';
+import { NotFoundPage } from '../pages/notFound/notFoundPage';
 import App from './App';
 
 const routesConfig = createRoutesFromElements(
