@@ -1,28 +1,27 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { Beer } from '../../model';
 import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import './cardList.scss';
 import { API_BASE_URL } from '../../model/constants';
+import { AppContext } from '../../contexts/appContextProvider';
+import { updateSearchString } from '../../utils';
 
 interface CardlistProps {
-  request: string;
+  request?: string;
 }
 
-export const CardList: FC<CardlistProps> = ({ request }) => {
+export const CardList: FC<CardlistProps> = () => {
   const [isLoading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<Beer[] | null>(null);
+  const { searchValue } = useContext(AppContext);
 
   const results = searchResult || [];
 
   useEffect(() => {
-    getCards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getCards = (): void => {
     setLoading(true);
+    const request = updateSearchString(searchValue);
 
     fetch(`${API_BASE_URL}${request}`)
       .then((res) => res.json())
@@ -32,8 +31,11 @@ export const CardList: FC<CardlistProps> = ({ request }) => {
       })
       .catch((err) => {
         throw new Error(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  };
+  }, [searchValue]);
 
   return (
     <>

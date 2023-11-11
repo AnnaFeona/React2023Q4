@@ -1,29 +1,32 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useContext, useEffect, useState } from 'react';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { transformInputValue } from '../../utils';
+import { AppContext } from '../../contexts/appContextProvider';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const [searchValue, setSearchValue] = useState('');
+  const context = useContext(AppContext);
+  const [searchValue, setSearchValue] = useState(context.searchValue);
 
   useEffect(() => {
     getSearchValue();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
+    setSearchValue(value);
+    context.setSearchValue?.(value);
+
     if (location.pathname === '/' && value !== '') {
       setSearchParams({ beer_name: value });
     }
-    setSearchValue(value);
   };
 
   const saveSearchValue = (e: FormEvent) => {
@@ -32,6 +35,7 @@ export const Search: FC = () => {
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
     setSearchParams({ beer_name: dataToSave.join('_') });
+    context.setSearchValue?.(searchValue);
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
