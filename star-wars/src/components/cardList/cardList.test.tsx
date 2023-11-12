@@ -13,7 +13,7 @@ describe('CardList', () => {
     (global.fetch as jest.Mock).mockClear();
   });
 
-  it('renders loading state initially', () => {
+  it('Check that a loading indicator is displayed while fetching data', () => {
     (global.fetch as jest.Mock).mockResolvedValue({
       json: () => mockBeerList,
     });
@@ -27,7 +27,7 @@ describe('CardList', () => {
     waitFor(() => {});
   });
 
-  it('renders not found with empty search response', async () => {
+  it('Check that an appropriate message is displayed if no cards are present.', async () => {
     const mockBeerListEmpty: Beer[] = [];
 
     await act(async () => {
@@ -51,7 +51,7 @@ describe('CardList', () => {
     await waitFor(() => expect(screen.getByText(/oups.../i)).toBeInTheDocument());
   });
 
-  it('renders beer cards after successful fetch', async () => {
+  it('Verify that the component renders the specified number of cards', async () => {
     (global.fetch as jest.Mock).mockResolvedValue({
       json: () => mockBeerList,
     });

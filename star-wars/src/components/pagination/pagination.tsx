@@ -50,6 +50,7 @@ export const Pagination: FC = () => {
       setCurrentPage(currentPage + 1);
       context.page.setValue?.(currentPage);
     }
+    saveChanges();
   };
 
   const getTotalItems = () => {

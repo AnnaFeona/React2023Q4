@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
 const mockBeer = mockBeerList[0];
 
 describe('Card', () => {
-  it('renders card with beer information', () => {
+  it('Ensure that the card component renders the relevant card data', () => {
     render(<Card beer={mockBeer} />);
 
     expect(screen.getByText(`Name: ${mockBeer.name}`)).toBeInTheDocument();
@@ -20,7 +20,7 @@ describe('Card', () => {
     expect(screen.getByAltText('')).toHaveAttribute('src', mockBeer.image_url);
   });
 
-  it('navigates to details page when "Show details" button is clicked', () => {
+  it('Validate that clicking on a card opens a detailed card component', () => {
     const mockNavigate = jest.fn();
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 

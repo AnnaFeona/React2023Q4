@@ -52,7 +52,7 @@ describe('Search', () => {
     expect(inputElement).toHaveValue('test');
   });
 
-  it('loads search value from localStorage on mount', () => {
+  it('Check that the component retrieves the value from the local storage upon mounting', () => {
     window.localStorage.setItem(searchKey, 'help');
 
     render(
@@ -65,7 +65,7 @@ describe('Search', () => {
     expect(inputElement).toHaveValue('help');
   });
 
-  it('updates localstorage by submission', () => {
+  it('Verify that clicking the Search button saves the entered value to the local storage', () => {
     render(
       <BrowserRouter>
         <Search />

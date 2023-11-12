@@ -17,17 +17,7 @@ const routesConfig = createRoutesFromElements(
 );
 
 describe('App', () => {
-  it('render App', () => {
-    // render(<App />);
-    // const memoryRouter = createMemoryRouter(routesConfig, {
-    //   initialEntries: ['/'],
-    // });
-    // render(<RouterProvider router={memoryRouter} />);
-    // screen.debug();
-    // expect(screen.getByRole('heading')).toBeInTheDocument();
-  });
-
-  it('not-found page when incorrect path', () => {
+  it('Ensure that the 404 page is displayed when navigating to an invalid route', () => {
     const memoryRouter = createMemoryRouter(routesConfig, {
       initialEntries: ['/badroute'],
     });
