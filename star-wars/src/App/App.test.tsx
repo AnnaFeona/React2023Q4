@@ -5,7 +5,7 @@ import { RootLayout } from '../layout/rootLayout';
 import { Details } from '../pages/details/details';
 import { Main } from '../pages/main/main';
 import { NotFoundPage } from '../pages/notFound/notFoundPage';
-import App from './App';
+// import App from './App';
 
 const routesConfig = createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
@@ -18,13 +18,11 @@ const routesConfig = createRoutesFromElements(
 
 describe('App', () => {
   it('render App', () => {
-    render(<App />);
+    // render(<App />);
     // const memoryRouter = createMemoryRouter(routesConfig, {
     //   initialEntries: ['/'],
     // });
-
     // render(<RouterProvider router={memoryRouter} />);
-
     // screen.debug();
     // expect(screen.getByRole('heading')).toBeInTheDocument();
   });

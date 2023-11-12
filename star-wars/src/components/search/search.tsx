@@ -34,7 +34,7 @@ export const Search: FC = () => {
     e.preventDefault();
 
     const dataToSave = transformInputValue(searchValue);
-    localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
+    localStorage.setItem(searchKey, dataToSave.join(' '));
     setSearchParams({ beer_name: dataToSave.join('_') });
     search.setValue?.(searchValue);
   };

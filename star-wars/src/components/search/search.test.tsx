@@ -1,51 +1,82 @@
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+
+import { render, screen, fireEvent } from '@testing-library/react';
+// import '@testing-library/jest-dom';
 import { Search } from './search';
-import { MemoryRouter } from 'react-router-dom';
-import { userEvent } from '@testing-library/user-event';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { STORAGE_KEY_PREFFIX } from '../../model/constants';
+
+const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
+
+let storage: Record<string, string> = {};
 
 const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeIten: jest.fn(),
-  clear: jest.fn(),
+  getItem: jest.fn((key) => storage[key] || null),
+  setItem: jest.fn((key, value) => {
+    storage[key] = value.toString();
+  }),
+  removeItem: jest.fn((key) => {
+    delete storage[key];
+  }),
+  clear: jest.fn(() => {
+    storage = {};
+  }),
 };
 
-// const handleChanges = jest.fn(() => {});
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
 
 describe('Search', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'localStorage', {
       value: localStorageMock,
+      writable: true,
     });
   });
 
-  it('render search', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders and updates search value', async () => {
     render(
       <MemoryRouter>
         <Search />
       </MemoryRouter>,
     );
-    // screen.debug();
-    const el = screen.getByRole('textbox');
-    expect(el).toBeInTheDocument();
+
+    const inputElement = screen.getByRole('textbox');
+    expect(inputElement).toBeInTheDocument();
+
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    expect(inputElement).toHaveValue('test');
   });
 
-  it('localStorage', () => {
-    const { unmount } = render(
+  it('loads search value from localStorage on mount', () => {
+    window.localStorage.setItem(searchKey, 'help');
+
+    render(
       <MemoryRouter>
         <Search />
       </MemoryRouter>,
     );
-    const text = 'test';
-    const inp = screen.getByRole('textbox');
-    // const btn = screen.getByRole('button');
-    // const form = screen.queryByRole<HTMLFormElement>('form');
 
-    unmount();
+    const inputElement = screen.getByRole('textbox');
+    expect(inputElement).toHaveValue('help');
+  });
 
-    userEvent.type(inp, text);
-    // expect(handleChanges).toHaveBeenCalledTimes(text.length);
-    // expect(window.localStorage.setItem).toHaveBeenCalled();
+  it('updates localstorage by submission', () => {
+    render(
+      <BrowserRouter>
+        <Search />
+      </BrowserRouter>,
+    );
+
+    const inputElement = screen.getByRole('textbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+
+    fireEvent.submit(screen.getByRole('button', { name: /search/i }));
+    expect(window.localStorage.setItem).toHaveBeenCalledWith(searchKey, 'test');
   });
 });
