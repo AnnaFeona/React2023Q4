@@ -3,4 +3,5 @@
 
 cd star-wars
 npm run lint:fix
+npm run test
 git add .
