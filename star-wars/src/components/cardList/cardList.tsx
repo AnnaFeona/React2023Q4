@@ -11,7 +11,7 @@ import { updateSearchString } from '../../utils';
 export const CardList: FC = () => {
   const { search, page, limit, beer } = useContext(AppContext);
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [searchResult, setSearchResult] = useState<Beer[]>(beer.value);
   const [isFetchError, setFetchError] = useState(false);
 

@@ -13,7 +13,21 @@ describe('CardList', () => {
     (global.fetch as jest.Mock).mockClear();
   });
 
-  it('renders loading state initially', async () => {
+  it('renders loading state initially', () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      json: () => mockBeerList,
+    });
+
+    render(
+      <AppContextProvider>
+        <CardList />
+      </AppContextProvider>,
+    );
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    waitFor(() => {});
+  });
+
+  it('renders not found with empty search response', async () => {
     const mockBeerListEmpty: Beer[] = [];
 
     await act(async () => {
