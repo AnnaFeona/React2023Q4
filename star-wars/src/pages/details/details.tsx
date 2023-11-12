@@ -9,7 +9,7 @@ import { Loader } from '../../components/loader/loader';
 
 export const Details: FC = () => {
   const [card, setCard] = useState<Beer | null>(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 

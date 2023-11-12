@@ -21,10 +21,10 @@ export interface Beer {
   ibu?: number;
   target_fg?: number;
   target_og: number;
-  ebc: number;
-  srm: number;
-  ph: number;
-  attenuation_level: number;
+  ebc?: number | null;
+  srm?: number | null;
+  ph?: number;
+  attenuation_level?: number;
   volume: {
     value: number;
     unit: string;
@@ -34,15 +34,13 @@ export interface Beer {
     unit: string;
   };
   method: {
-    mash_temp: [
-      {
-        temp: {
-          value: number;
-          unit: string;
-        };
-        duration: number | null;
-      },
-    ];
+    mash_temp?: {
+      temp?: {
+        value?: number;
+        unit?: string;
+      };
+      duration: number | null;
+    }[];
     fermentation: {
       temp: {
         value: number;
