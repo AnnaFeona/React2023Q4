@@ -13,13 +13,13 @@ export interface Beer {
   name: string;
   description: string;
   image_url: string;
-  brewers_tips: string;
-  contributed_by: string;
-  tagline: string;
-  first_brewed: string;
-  abv: number;
-  ibu: number;
-  target_fg: number;
+  brewers_tips?: string;
+  contributed_by?: string;
+  tagline?: string;
+  first_brewed?: string;
+  abv?: number;
+  ibu?: number;
+  target_fg?: number;
   target_og: number;
   ebc: number;
   srm: number;
@@ -40,7 +40,7 @@ export interface Beer {
           value: number;
           unit: string;
         };
-        duration: number;
+        duration: number | null;
       },
     ];
     fermentation: {
@@ -51,52 +51,23 @@ export interface Beer {
     };
     twist: null;
   };
-  ingredients: {
-    malt: [
-      {
-        name: string;
-        amount: {
-          value: number;
-          unit: string;
-        };
-      },
-      {
-        name: string;
-        amount: {
-          value: number;
-          unit: string;
-        };
-      },
-    ];
-    hops: [
-      {
-        name: string;
-        amount: {
-          value: number;
-          unit: string;
-        };
-        add: string;
-        attribute: string;
-      },
-      {
-        name: string;
-        amount: {
-          value: number;
-          unit: string;
-        };
-        add: string;
-        attribute: string;
-      },
-      {
-        name: string;
-        amount: {
-          value: number;
-          unit: string;
-        };
-        add: string;
-        attribute: string;
-      },
-    ];
+  ingredients?: {
+    malt?: {
+      name?: string;
+      amount?: {
+        value: number;
+        unit: string;
+      };
+    }[];
+    hops: {
+      name: string;
+      amount: {
+        value: number;
+        unit: string;
+      };
+      add: string;
+      attribute: string;
+    }[];
     yeast: string;
   };
   food_pairing: string[];

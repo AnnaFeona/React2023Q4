@@ -3,6 +3,8 @@
 
 .loader_container {
   @include mx.flex-center;
+  flex-direction: column;
+  gap: 2rem;
 }
 .loader {
   width: 48px;

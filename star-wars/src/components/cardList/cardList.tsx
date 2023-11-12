@@ -13,6 +13,7 @@ export const CardList: FC = () => {
 
   const [isLoading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<Beer[]>(beer.value);
+  const [isFetchError, setFetchError] = useState(false);
 
   const results = beer.value;
 
@@ -27,7 +28,8 @@ export const CardList: FC = () => {
         setSearchResult(beer);
       })
       .catch((err) => {
-        throw new Error(err.message);
+        setFetchError(true);
+        console.error(err.message);
       })
       .finally(() => {
         setLoading(false);
@@ -41,6 +43,7 @@ export const CardList: FC = () => {
   return (
     <>
       <div className="container">
+        {isFetchError && `Oups... something went wrong...`}
         {(!isLoading && !results.length) || !results ? 'Not found :(' : ''}
         {!isLoading ? results.map((item) => <Card beer={item} key={item.id} />) : <Loader />}
       </div>
