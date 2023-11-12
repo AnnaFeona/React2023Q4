@@ -1,0 +1,7 @@
+@use '../styles/mixins' as mx;
+@use '../styles/vars' as v;
+
+#root {
+  @include mx.wrapper(100%);
+  flex-direction: column;
+}
