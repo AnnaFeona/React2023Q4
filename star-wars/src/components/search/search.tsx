@@ -17,6 +17,7 @@ export const Search: FC = () => {
 
   useEffect(() => {
     getSearchValue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSearchValue = () => {

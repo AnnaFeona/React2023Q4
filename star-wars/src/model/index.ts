@@ -1,5 +1,12 @@
+import { Dispatch } from 'react';
+
 /* eslint-disable no-unused-vars */
 export type Callback<T = unknown, K = void> = (data?: T) => K;
+
+export interface StateCall<T> {
+  value: T;
+  setValue?: Dispatch<React.SetStateAction<T>>;
+}
 
 export interface Beer {
   id: number;
@@ -8,38 +15,38 @@ export interface Beer {
   image_url: string;
   brewers_tips: string;
   contributed_by: string;
-  tagline: "Bloggers' Imperial Pilsner.";
-  first_brewed: '02/2011';
-  abv: 7.2;
-  ibu: 59;
-  target_fg: 1027;
-  target_og: 1069;
-  ebc: 10;
-  srm: 5;
-  ph: 4.4;
-  attenuation_level: 67;
+  tagline: string;
+  first_brewed: string;
+  abv: number;
+  ibu: number;
+  target_fg: number;
+  target_og: number;
+  ebc: number;
+  srm: number;
+  ph: number;
+  attenuation_level: number;
   volume: {
-    value: 20;
-    unit: 'litres';
+    value: number;
+    unit: string;
   };
   boil_volume: {
-    value: 25;
-    unit: 'litres';
+    value: number;
+    unit: string;
   };
   method: {
     mash_temp: [
       {
         temp: {
-          value: 66;
-          unit: 'celsius';
+          value: number;
+          unit: string;
         };
-        duration: 70;
+        duration: number;
       },
     ];
     fermentation: {
       temp: {
-        value: 10;
-        unit: 'celsius';
+        value: number;
+        unit: string;
       };
     };
     twist: null;
@@ -47,54 +54,50 @@ export interface Beer {
   ingredients: {
     malt: [
       {
-        name: 'Lager Malt';
+        name: string;
         amount: {
-          value: 6.63;
-          unit: 'kilograms';
+          value: number;
+          unit: string;
         };
       },
       {
-        name: 'Wheat';
+        name: string;
         amount: {
-          value: 0.38;
-          unit: 'kilograms';
+          value: number;
+          unit: string;
         };
       },
     ];
     hops: [
       {
-        name: 'Saaz';
+        name: string;
         amount: {
-          value: 60;
-          unit: 'grams';
+          value: number;
+          unit: string;
         };
-        add: 'start';
-        attribute: 'bitter';
+        add: string;
+        attribute: string;
       },
       {
-        name: 'Saaz';
+        name: string;
         amount: {
-          value: 60;
-          unit: 'grams';
+          value: number;
+          unit: string;
         };
-        add: 'middle';
-        attribute: 'flavour';
+        add: string;
+        attribute: string;
       },
       {
-        name: 'Saaz';
+        name: string;
         amount: {
-          value: 60;
-          unit: 'grams';
+          value: number;
+          unit: string;
         };
-        add: 'end';
-        attribute: 'flavour';
+        add: string;
+        attribute: string;
       },
     ];
-    yeast: 'Wyeast 2007 - Pilsen Lager™';
+    yeast: string;
   };
-  food_pairing: [
-    'Vietnamese squid salad',
-    'Chargrilled corn on the cob with paprika butter',
-    'Strawberry and rhubarb pie',
-  ];
+  food_pairing: string[];
 }

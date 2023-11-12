@@ -13,15 +13,16 @@ interface CardlistProps {
 }
 
 export const CardList: FC<CardlistProps> = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState<Beer[] | null>(null);
-  const { searchValue } = useContext(AppContext);
+  const { searchValue, page, limit, setCardlist, cardList } = useContext(AppContext);
 
-  const results = searchResult || [];
+  const [isLoading, setLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState<Beer[]>(cardList);
+
+  const results = cardList;
 
   useEffect(() => {
     setLoading(true);
-    const request = updateSearchString(searchValue);
+    const request = updateSearchString(searchValue, page, limit);
 
     fetch(`${API_BASE_URL}${request}`)
       .then((res) => res.json())
@@ -35,12 +36,16 @@ export const CardList: FC<CardlistProps> = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchValue]);
+  }, [searchValue, limit, page]);
+
+  useEffect(() => {
+    setCardlist?.(searchResult || []);
+  }, [searchResult, setCardlist]);
 
   return (
     <>
       <div className="container">
-        {!results || (!results.length && !isLoading) ? 'Not found :(' : ''}
+        {(!isLoading && !results.length) || !results ? 'Not found :(' : ''}
         {!isLoading ? results.map((item) => <Card beer={item} key={item.id} />) : <Loader />}
       </div>
     </>

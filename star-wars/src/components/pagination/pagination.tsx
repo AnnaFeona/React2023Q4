@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 
 import './pagination.scss';
 import { Button } from '../button/button';
 import { Select } from '../select/select';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
+import { AppContext } from '../../contexts/appContextProvider';
 
 interface PaginationProps {
   searchValue: string;
@@ -18,6 +19,8 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const location = useLocation();
+
+  const context = useContext(AppContext);
 
   useEffect(() => {
     getTotalItems();
@@ -43,11 +46,13 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const toPrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      context.setPage?.(currentPage);
     }
   };
   const toNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      context.setPage?.(currentPage);
     }
   };
 
@@ -83,6 +88,8 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
         });
       }
     }
+    context.setLimit?.(limit);
+    context.setPage?.(currentPage);
   };
 
   return (
