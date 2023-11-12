@@ -4,8 +4,4 @@ import App from './App/App.tsx';
 
 import './styles/index.scss';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <ErrorBoundary>
-  <App />,
-  // </ErrorBoundary>,
-);
+ReactDOM.createRoot(document.getElementById('root')!).render(<App />);

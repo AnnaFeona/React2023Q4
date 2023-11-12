@@ -9,7 +9,9 @@ import { allBeers } from '../../mocks/cardListMock';
 (global.fetch as jest.Mock) = jest.fn();
 
 describe('Pagination', () => {
-  beforeAll(() => {});
+  beforeAll(() => {
+    (global.fetch as jest.Mock).mockClear();
+  });
 
   it('renders pagination component with default values', async () => {
     await act(() => {

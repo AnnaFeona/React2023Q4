@@ -5,7 +5,6 @@ import { RootLayout } from '../layout/rootLayout';
 import { Details } from '../pages/details/details';
 import { Main } from '../pages/main/main';
 import { NotFoundPage } from '../pages/notFound/notFoundPage';
-// import App from './App';
 
 const routesConfig = createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
