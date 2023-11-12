@@ -49,7 +49,7 @@ export interface Beer {
         unit: string;
       };
     };
-    twist: null;
+    twist?: string | null;
   };
   ingredients?: {
     malt?: {

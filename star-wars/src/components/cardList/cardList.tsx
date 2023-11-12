@@ -29,6 +29,7 @@ export const CardList: FC = () => {
       })
       .catch((err) => {
         setFetchError(true);
+        // eslint-disable-next-line no-console
         console.error(err.message);
       })
       .finally(() => {

@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import { render, screen, fireEvent } from '@testing-library/react';
-// import '@testing-library/jest-dom';
 import { Search } from './search';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
