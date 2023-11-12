@@ -12,8 +12,8 @@ export const Search: FC = () => {
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const context = useContext(AppContext);
-  const [searchValue, setSearchValue] = useState(context.searchValue);
+  const { search } = useContext(AppContext);
+  const [searchValue, setSearchValue] = useState(search.value);
 
   useEffect(() => {
     getSearchValue();
@@ -23,7 +23,7 @@ export const Search: FC = () => {
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     setSearchValue(value);
-    context.setSearchValue?.(value);
+    search.setValue?.(value);
 
     if (location.pathname === '/' && value !== '') {
       setSearchParams({ beer_name: value });
@@ -36,7 +36,7 @@ export const Search: FC = () => {
     const dataToSave = transformInputValue(searchValue);
     localStorage.setItem(`${STORAGE_KEY_PREFFIX}_searchRequest`, dataToSave.join(' '));
     setSearchParams({ beer_name: dataToSave.join('_') });
-    context.setSearchValue?.(searchValue);
+    search.setValue?.(searchValue);
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {

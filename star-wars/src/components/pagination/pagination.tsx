@@ -8,11 +8,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
 import { AppContext } from '../../contexts/appContextProvider';
 
-interface PaginationProps {
-  searchValue: string;
-}
-
-export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
+export const Pagination: FC = () => {
   const [, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
@@ -30,7 +26,7 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   useEffect(() => {
     getTotalItems();
     getTotalPages();
-  }, [searchValue]);
+  }, [context.search.value]);
 
   useEffect(() => {
     getTotalPages();
@@ -46,18 +42,18 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
   const toPrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      context.setPage?.(currentPage);
+      context.page.setValue?.(currentPage);
     }
   };
   const toNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      context.setPage?.(currentPage);
+      context.page.setValue?.(currentPage);
     }
   };
 
   const getTotalItems = () => {
-    const url = searchValue ? `?beer_name=${searchValue}&per_page=80` : '';
+    const url = context.search.value ? `?beer_name=${context.search.value}&per_page=80` : '';
     fetch(`${API_BASE_URL}${url}`)
       .then((res) => res.json())
       .then((beer) => {
@@ -75,9 +71,9 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
 
   const saveChanges = () => {
     if (location.pathname === '/') {
-      if (searchValue !== '') {
+      if (context.search.value !== '') {
         setSearchParams({
-          beer_name: searchValue,
+          beer_name: context.search.value,
           page: currentPage.toString(),
           per_page: limit.toString(),
         });
@@ -88,8 +84,8 @@ export const Pagination: FC<PaginationProps> = ({ searchValue }) => {
         });
       }
     }
-    context.setLimit?.(limit);
-    context.setPage?.(currentPage);
+    context.limit.setValue?.(limit);
+    context.page.setValue?.(currentPage);
   };
 
   return (

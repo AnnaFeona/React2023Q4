@@ -1,12 +1,12 @@
-import { Dispatch, FC, ReactNode, createContext, useState } from 'react';
-import { Beer } from '../model';
+import { FC, ReactNode, createContext, useState } from 'react';
+import { Beer, StateCall } from '../model';
 import { INITIAL_PAGE, INITIAL_LIMIT } from '../model/constants';
 
 export const AppContext = createContext<ContextValueType>({
-  searchValue: '',
-  cardList: [],
-  page: INITIAL_PAGE,
-  limit: INITIAL_LIMIT,
+  search: { value: '' },
+  beer: { value: [] },
+  page: { value: INITIAL_PAGE },
+  limit: { value: INITIAL_LIMIT },
 });
 
 interface ContextProps {
@@ -14,31 +14,23 @@ interface ContextProps {
 }
 
 interface ContextValueType {
-  searchValue: string;
-  setSearchValue?: Dispatch<React.SetStateAction<string>>;
-  cardList: Beer[];
-  setCardlist?: Dispatch<React.SetStateAction<Beer[]>>;
-  page: number;
-  setPage?: Dispatch<React.SetStateAction<number>>;
-  limit: number;
-  setLimit?: Dispatch<React.SetStateAction<number>>;
+  search: StateCall<string>;
+  beer: StateCall<Beer[]>;
+  page: StateCall<number>;
+  limit: StateCall<number>;
 }
 
 export const AppContextProvider: FC<ContextProps> = ({ children }) => {
-  const [searchValue, setSearchValue] = useState('');
-  const [cardList, setCardlist] = useState<Beer[]>([]);
-  const [page, setPage] = useState(INITIAL_PAGE);
-  const [limit, setLimit] = useState(INITIAL_LIMIT);
+  const _search = useState('');
+  const _beer = useState<Beer[]>([]);
+  const _page = useState(INITIAL_PAGE);
+  const _limit = useState(INITIAL_LIMIT);
 
   const value = {
-    searchValue,
-    setSearchValue,
-    cardList,
-    setCardlist,
-    page,
-    setPage,
-    limit,
-    setLimit,
+    search: { value: _search[0], setValue: _search[1] },
+    beer: { value: _beer[0], setValue: _beer[1] },
+    limit: { value: _page[0], setValue: _page[1] },
+    page: { value: _limit[0], setValue: _limit[1] },
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

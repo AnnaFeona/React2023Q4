@@ -8,21 +8,17 @@ import { API_BASE_URL } from '../../model/constants';
 import { AppContext } from '../../contexts/appContextProvider';
 import { updateSearchString } from '../../utils';
 
-interface CardlistProps {
-  request?: string;
-}
-
-export const CardList: FC<CardlistProps> = () => {
-  const { searchValue, page, limit, setCardlist, cardList } = useContext(AppContext);
+export const CardList: FC = () => {
+  const { search, page, limit, beer } = useContext(AppContext);
 
   const [isLoading, setLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState<Beer[]>(cardList);
+  const [searchResult, setSearchResult] = useState<Beer[]>(beer.value);
 
-  const results = cardList;
+  const results = beer.value;
 
   useEffect(() => {
     setLoading(true);
-    const request = updateSearchString(searchValue, page, limit);
+    const request = updateSearchString(search.value, page.value, limit.value);
 
     fetch(`${API_BASE_URL}${request}`)
       .then((res) => res.json())
@@ -36,11 +32,11 @@ export const CardList: FC<CardlistProps> = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchValue, limit, page]);
+  }, [search.value, limit.value, page.value]);
 
   useEffect(() => {
-    setCardlist?.(searchResult || []);
-  }, [searchResult, setCardlist]);
+    beer.setValue?.(searchResult || []);
+  }, [searchResult, beer]);
 
   return (
     <>
