@@ -5,10 +5,10 @@ import './pagination.scss';
 import { Button } from '../button/button';
 import { Select } from '../select/select';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { API_BASE_URL } from '../../model/constants';
+import { API_BASE_URL, INITIAL_PAGE } from '../../model/constants';
 import { AppContext } from '../../contexts/appContextProvider';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { decrement, increment, setItemsPerPage } from './pagination.slice';
+import { decrement, increment, setItemsPerPage, setPage } from './pagination.slice';
 
 export const Pagination: FC = () => {
   const page = useAppSelector((state) => state.pagination.page);
@@ -96,6 +96,7 @@ export const Pagination: FC = () => {
     context.limit.setValue?.(limit);
     context.page.setValue?.(currentPage);
     dispatch(setItemsPerPage(limit));
+    dispatch(setPage(INITIAL_PAGE));
   };
 
   return (

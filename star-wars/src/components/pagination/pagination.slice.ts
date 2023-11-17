@@ -22,12 +22,15 @@ export const paginationSlice = createSlice({
     decrement: (state) => {
       state.page -= 1;
     },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
+    },
     setItemsPerPage: (state, action: PayloadAction<number>) => {
       state.itemsPerPage = action.payload;
     },
   },
 });
 
-export const { increment, decrement, setItemsPerPage } = paginationSlice.actions;
+export const { increment, decrement, setItemsPerPage, setPage } = paginationSlice.actions;
 
 export const paginationReducer = paginationSlice.reducer;
