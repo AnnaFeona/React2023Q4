@@ -5,6 +5,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { AppContextProvider } from '../../contexts/appContextProvider';
 import { Pagination } from './pagination';
 import { allBeers } from '../../mocks/cardListMock';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 (global.fetch as jest.Mock) = jest.fn();
 
@@ -20,11 +22,14 @@ describe('Pagination', () => {
       });
 
       render(
-        <MemoryRouter>
-          <AppContextProvider>
-            <Pagination />
-          </AppContextProvider>
-        </MemoryRouter>,
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/?page=1']}>
+            <AppContextProvider>
+              <Pagination />
+            </AppContextProvider>
+          </MemoryRouter>
+          ,
+        </Provider>,
       );
     });
 
@@ -45,11 +50,14 @@ describe('Pagination', () => {
       });
 
       render(
-        <MemoryRouter initialEntries={['/?page=1']}>
-          <AppContextProvider>
-            <Pagination />
-          </AppContextProvider>
-        </MemoryRouter>,
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/?page=1']}>
+            <AppContextProvider>
+              <Pagination />
+            </AppContextProvider>
+          </MemoryRouter>
+          ,
+        </Provider>,
       );
     });
 

@@ -8,6 +8,8 @@ import './App.scss';
 import { NotFoundPage } from '../pages/notFound/notFoundPage';
 import { RootLayout } from '../layout/rootLayout';
 import { Details } from '../pages/details/details';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +23,11 @@ const router = createBrowserRouter(
 );
 
 const App: FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 };
 
 export default App;

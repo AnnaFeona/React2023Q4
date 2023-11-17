@@ -7,12 +7,18 @@ import { Select } from '../select/select';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../model/constants';
 import { AppContext } from '../../contexts/appContextProvider';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { decrement, increment, setItemsPerPage } from './pagination.slice';
 
 export const Pagination: FC = () => {
+  const page = useAppSelector((state) => state.pagination.page);
+  const itemsPerPage = useAppSelector((state) => state.pagination.itemsPerPage);
+  const dispatch = useAppDispatch();
+
   const [, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(page);
   const [totalItems, setTotalItems] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(itemsPerPage);
   const [totalPages, setTotalPages] = useState(1);
   const location = useLocation();
 
@@ -43,12 +49,14 @@ export const Pagination: FC = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
       context.page.setValue?.(currentPage);
+      dispatch(decrement());
     }
   };
   const toNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       context.page.setValue?.(currentPage);
+      dispatch(increment());
     }
     saveChanges();
   };
@@ -87,6 +95,7 @@ export const Pagination: FC = () => {
     }
     context.limit.setValue?.(limit);
     context.page.setValue?.(currentPage);
+    dispatch(setItemsPerPage(limit));
   };
 
   return (
