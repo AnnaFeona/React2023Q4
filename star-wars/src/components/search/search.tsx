@@ -1,13 +1,12 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { STORAGE_KEY_PREFFIX } from '../../model/constants';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { INITIAL_PAGE, STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { transformInputValue } from '../../utils';
-// import { AppContext } from '../../contexts/appContextProvider';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setSearchValue } from '../../store/pagination.slice';
+import { setPage, setSearchValue } from '../../store/pagination.slice';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
@@ -16,18 +15,16 @@ export const Search: FC = () => {
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
-  // const { search } = useContext(AppContext);
   const [searchVal, setSearchVal] = useState(searchValue);
 
-  useEffect(() => {
-    getSearchValue();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getSearchValue();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     setSearchVal(value);
-    // search.setValue?.(value);
 
     if (location.pathname === '/' && value !== '') {
       setSearchParams({ beer_name: value });
@@ -41,14 +38,18 @@ export const Search: FC = () => {
     const dataToSave = transformInputValue(searchVal);
     localStorage.setItem(searchKey, dataToSave.join(' '));
     setSearchParams({ beer_name: dataToSave.join('_') });
-    // search.setValue?.(searchValue);
     dispatch(setSearchValue(dataToSave.join(' ')));
+    dispatch(setPage(INITIAL_PAGE));
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchVal(value || '');
   };
+
+  useState(() => {
+    getSearchValue();
+  });
 
   return (
     <>

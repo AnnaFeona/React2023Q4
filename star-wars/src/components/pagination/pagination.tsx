@@ -20,8 +20,6 @@ export const Pagination: FC = () => {
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
 
-  // const context = useContext(AppContext);
-
   useEffect(() => {
     getTotalPages();
   }, []);
@@ -75,18 +73,20 @@ export const Pagination: FC = () => {
   return (
     <>
       <h3>{data.length} found</h3>
-      <div className="pagination__container">
-        <div className="pagination__nav">
-          <Button title="Prev" onClick={toPrevPage} disabled={page === 1} />
-          <div className="pagination__index">
-            {page} of {getTotalPages()}
+      {data.length !== 0 && (
+        <div className="pagination__container">
+          <div className="pagination__nav">
+            <Button title="Prev" onClick={toPrevPage} disabled={page === 1} />
+            <div className="pagination__index">
+              {page} of {getTotalPages()}
+            </div>
+            <Button title="Next" onClick={toNextPage} disabled={page === getTotalPages()} />
           </div>
-          <Button title="Next" onClick={toNextPage} disabled={page === getTotalPages()} />
+          <div className="pagination__select">
+            <Select />
+          </div>
         </div>
-        <div className="pagination__select">
-          <Select />
-        </div>
-      </div>
+      )}
     </>
   );
 };
