@@ -8,7 +8,7 @@ describe('utils', () => {
   });
 
   it('updateSearchString', () => {
-    expect(updateSearchString('')).toBe('?');
+    expect(updateSearchString('')).toBe('');
     expect(updateSearchString('test')).toBe('?beer_name=test&');
   });
 });

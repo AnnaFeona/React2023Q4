@@ -9,7 +9,7 @@ import { NotFoundPage } from '../pages/notFound/notFoundPage';
 import { RootLayout } from '../layout/rootLayout';
 import { Details } from '../pages/details/details';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { store } from '../store/store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

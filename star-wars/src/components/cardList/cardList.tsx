@@ -1,52 +1,37 @@
-import { FC, useContext, useEffect, useState } from 'react';
-import { Beer } from '../../model';
+import { FC, useEffect } from 'react';
+// import { Beer } from '../../model';
 import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import './cardList.scss';
-import { API_BASE_URL } from '../../model/constants';
-import { AppContext } from '../../contexts/appContextProvider';
+// import { API_BASE_URL } from '../../model/constants';
+// import { AppContext } from '../../contexts/appContextProvider';
+// import { updateSearchString } from '../../utils';
+import { useGetBeerByNameQuery } from '../../services/beers';
+import { useAppSelector } from '../../store/hooks';
 import { updateSearchString } from '../../utils';
 
 export const CardList: FC = () => {
-  const { search, page, limit, beer } = useContext(AppContext);
+  // const { search } = useContext(AppContext);
 
-  const [isLoading, setLoading] = useState(true);
-  const [searchResult, setSearchResult] = useState<Beer[]>(beer.value);
-  const [isFetchError, setFetchError] = useState(false);
+  const searchValue = useAppSelector((state) => state.pagination.searchValue);
+  const page = useAppSelector((state) => state.pagination.page);
+  const itemsPerPage = useAppSelector((state) => state.pagination.itemsPerPage);
+  const { data = [], isLoading, isError } = useGetBeerByNameQuery(updateSearchString(searchValue, page, itemsPerPage));
+  // const {} = state;
 
-  const results = beer.value;
+  useEffect(() => {}, [searchValue, page, itemsPerPage]);
 
-  useEffect(() => {
-    setLoading(true);
-    const request = updateSearchString(search.value, page.value, limit.value);
-
-    fetch(`${API_BASE_URL}${request}`)
-      .then((res) => res.json())
-      .then((beer) => {
-        setLoading(false);
-        setSearchResult(beer);
-      })
-      .catch((err) => {
-        setFetchError(true);
-        // eslint-disable-next-line no-console
-        console.error(err.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [search.value, limit.value, page.value]);
-
-  useEffect(() => {
-    beer.setValue?.(searchResult || []);
-  }, [searchResult, beer]);
+  // useEffect(() => {
+  //   beer.setValue?.(searchResult || []);
+  // }, [searchResult, beer]);
 
   return (
     <>
       <div className="container">
-        {isFetchError && `Oups... something went wrong...`}
-        {(!isLoading && !results.length) || !results ? 'Not found :(' : ''}
-        {!isLoading ? results.map((item) => <Card beer={item} key={item.id} />) : <Loader />}
+        {isError && `Oups... something went wrong...`}
+        {/* {(!isLoading && !data.length) || !data ? 'Not found :(' : ''} */}
+        {isLoading ? <Loader /> : data.map((item) => <Card beer={item} key={item.id} />)}
       </div>
     </>
   );

@@ -5,6 +5,8 @@ import { RootLayout } from '../layout/rootLayout';
 import { Details } from '../pages/details/details';
 import { Main } from '../pages/main/main';
 import { NotFoundPage } from '../pages/notFound/notFoundPage';
+import { store } from '../store/store';
+import { Provider } from 'react-redux';
 
 const routesConfig = createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
@@ -20,7 +22,11 @@ describe('App', () => {
     const memoryRouter = createMemoryRouter(routesConfig, {
       initialEntries: ['/badroute'],
     });
-    render(<RouterProvider router={memoryRouter} />);
+    render(
+      <Provider store={store}>
+        <RouterProvider router={memoryRouter} />
+      </Provider>,
+    );
 
     expect(screen.getByText(/404/)).toBeInTheDocument();
   });

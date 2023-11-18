@@ -1,19 +1,23 @@
-import { ChangeEvent, FC, FormEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
 import { Button } from '../button/button';
 
 import './search.scss';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { transformInputValue } from '../../utils';
-import { AppContext } from '../../contexts/appContextProvider';
+// import { AppContext } from '../../contexts/appContextProvider';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setSearchValue } from '../../store/pagination.slice';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
+  const searchValue = useAppSelector((state) => state.pagination.searchValue);
+  const dispatch = useAppDispatch();
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const { search } = useContext(AppContext);
-  const [searchValue, setSearchValue] = useState(search.value);
+  // const { search } = useContext(AppContext);
+  const [searchVal, setSearchVal] = useState(searchValue);
 
   useEffect(() => {
     getSearchValue();
@@ -22,26 +26,28 @@ export const Search: FC = () => {
 
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
-    setSearchValue(value);
-    search.setValue?.(value);
+    setSearchVal(value);
+    // search.setValue?.(value);
 
     if (location.pathname === '/' && value !== '') {
       setSearchParams({ beer_name: value });
     }
+    dispatch(setSearchValue(value));
   };
 
   const saveSearchValue = (e: FormEvent) => {
     e.preventDefault();
 
-    const dataToSave = transformInputValue(searchValue);
+    const dataToSave = transformInputValue(searchVal);
     localStorage.setItem(searchKey, dataToSave.join(' '));
     setSearchParams({ beer_name: dataToSave.join('_') });
-    search.setValue?.(searchValue);
+    // search.setValue?.(searchValue);
+    dispatch(setSearchValue(dataToSave.join(' ')));
   };
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setSearchValue(value || '');
+    setSearchVal(value || '');
   };
 
   return (
@@ -51,10 +57,10 @@ export const Search: FC = () => {
           className="search__input"
           type="text"
           onChange={handleChanges}
-          value={searchValue}
+          value={searchVal}
           placeholder="What ars you looking for?"
         />
-        <Button title="Search" type="submit" disabled={!searchValue} />
+        <Button title="Search" type="submit" disabled={!searchVal} />
       </form>
     </>
   );

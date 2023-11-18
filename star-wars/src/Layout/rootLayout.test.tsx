@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { RootLayout } from './rootLayout';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 const localStorageMock = {
   getItem: jest.fn(),
@@ -20,9 +22,12 @@ describe('Layout', () => {
 
   it('render root', () => {
     render(
-      <BrowserRouter>
-        <RootLayout />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <RootLayout />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     const el = screen.getByRole('main');

@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './errorBoundary';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 class ErrorThrowingComponent extends React.Component {
   componentDidMount() {
@@ -15,22 +17,28 @@ class ErrorThrowingComponent extends React.Component {
 
 describe('ErrorBoundary', () => {
   it('renders children when there is no error', () => {
-    const { getByText } = render(
-      <ErrorBoundary>
-        <div>Child Component</div>
-      </ErrorBoundary>,
+    render(
+      <Provider store={store}>
+        <ErrorBoundary>
+          <div>Child Component</div>
+        </ErrorBoundary>
+        ,
+      </Provider>,
     );
 
-    expect(getByText('Child Component')).toBeInTheDocument();
+    expect(screen.getByText('Child Component')).toBeInTheDocument();
   });
 
   it('renders error message when there is an error', () => {
-    const { getByText } = render(
-      <ErrorBoundary>
-        <ErrorThrowingComponent />
-      </ErrorBoundary>,
+    render(
+      <Provider store={store}>
+        <ErrorBoundary>
+          <ErrorThrowingComponent />
+        </ErrorBoundary>
+        ,
+      </Provider>,
     );
 
-    expect(getByText('Oups!...Something went wrong :(')).toBeInTheDocument();
+    expect(screen.getByText('Oups!...Something went wrong :(')).toBeInTheDocument();
   });
 });

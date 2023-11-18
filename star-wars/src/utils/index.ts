@@ -1,4 +1,6 @@
-export const updateSearchString = (value: string, page?: string | number, limit?: string | number): string => {
+export const updateSearchString = (value?: string, page?: string | number, limit?: string | number): string => {
+  if (!value && !page && !limit) return '';
+
   const name = value === '' ? '' : `beer_name=${value}&`;
   if (!page || !limit) return `?${name}`;
   return `?${name}page=${page}&per_page=${limit}`;

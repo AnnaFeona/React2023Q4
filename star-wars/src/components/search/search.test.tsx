@@ -2,8 +2,10 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Search } from './search';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { STORAGE_KEY_PREFFIX } from '../../model/constants';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
 
@@ -40,9 +42,12 @@ describe('Search', () => {
 
   it('renders and updates search value', async () => {
     render(
-      <MemoryRouter>
-        <Search />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Search />
+        </MemoryRouter>
+        ,
+      </Provider>,
     );
 
     const inputElement = screen.getByRole('textbox');
@@ -56,9 +61,12 @@ describe('Search', () => {
     window.localStorage.setItem(searchKey, 'help');
 
     render(
-      <MemoryRouter>
-        <Search />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Search />
+        </MemoryRouter>
+        ,
+      </Provider>,
     );
 
     const inputElement = screen.getByRole('textbox');
@@ -67,9 +75,12 @@ describe('Search', () => {
 
   it('Verify that clicking the Search button saves the entered value to the local storage', () => {
     render(
-      <BrowserRouter>
-        <Search />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Search />
+        </MemoryRouter>
+        ,
+      </Provider>,
     );
 
     const inputElement = screen.getByRole('textbox');
