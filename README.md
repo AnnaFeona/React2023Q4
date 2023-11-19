@@ -1,6 +1,6 @@
 ## Week 1. React. Components
 
-### [task](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01)
+### [task](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module04)
 
 ### [deploy](https://annafeona-rs-react-star-wars.netlify.app/)
 
@@ -9,17 +9,14 @@
 - HTML
 - Type Script
 - React
+- Redux
 - Scss
 - Vite
 - Prettier
 - Eslint
 - Husky
+- Jest
 
-### Used libraries
-
-- valibot - to validate the API response
-- lottie-react - to add animations as components
-  (json files with animations in the assets folder)
 
 #### Getting started
 
@@ -32,7 +29,7 @@ To get started with this project, follow these steps:
    ```
 2. Go to task branch:
    ```bash
-   $ git checkout task-1/react-components
+   $ git checkout task-4/redux-rtk
    ```
 3. Go to the project directory:
    ```bash
@@ -51,7 +48,7 @@ To get started with this project, follow these steps:
    $ npm run build
    ```
 
-### Commands for linters
+### Commands
 
 For running the lint command:
 
@@ -63,4 +60,10 @@ For running Prettier's --write command:
 
 ```bash
  $ npm run format:fix
+```
+
+For running tests:
+
+```bash
+ $ npm run test
 ```
