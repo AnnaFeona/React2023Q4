@@ -16,8 +16,6 @@ export const Select: FC<SelectProps> = () => {
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setItemsPerPage(Number(e.target.value)));
     dispatch(setPage(INITIAL_PAGE));
-
-    // onSelect?.(Number(e.target.value));
   };
 
   return (

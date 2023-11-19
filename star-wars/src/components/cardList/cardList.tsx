@@ -11,17 +11,19 @@ export const CardList: FC = () => {
   const searchValue = useAppSelector((state) => state.pagination.searchValue);
   const page = useAppSelector((state) => state.pagination.page);
   const itemsPerPage = useAppSelector((state) => state.pagination.itemsPerPage);
-  const { data = [], isLoading, isError } = useGetBeerByNameQuery(updateSearchString(searchValue, page, itemsPerPage));
+  const { data, isLoading, isError, isFetching } = useGetBeerByNameQuery(
+    updateSearchString(searchValue, page, itemsPerPage),
+  );
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Loader />
       ) : (
         <div className="container">
           {isError && `Oups... something went wrong...`}
-          {!data.length || !data ? 'Not found :(' : ''}
-          {!isLoading && data.map((item) => <Card beer={item} key={item.id} />)}
+          {!data?.length || !data ? 'Not found :(' : ''}
+          {!isLoading && data?.map((item) => <Card beer={item} key={item.id} />)}
         </div>
       )}
     </>

@@ -6,6 +6,9 @@ export const beerApi = createApi({
   reducerPath: 'beersApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   endpoints: (builder) => ({
+    getInitisl: builder.query<Beer[], string>({
+      query: () => '',
+    }),
     getBeerByName: builder.query<Beer[], string>({
       query: (searcParams) => `${searcParams}`,
     }),
@@ -18,4 +21,4 @@ export const beerApi = createApi({
   }),
 });
 
-export const { useGetBeerByNameQuery, useGetBerrByIdQuery, useGetAllBeersQuery } = beerApi;
+export const { useGetBeerByNameQuery, useGetBerrByIdQuery, useGetAllBeersQuery, useGetInitislQuery } = beerApi;

@@ -7,6 +7,7 @@ import { Main } from '../pages/main/main';
 import { NotFoundPage } from '../pages/notFound/notFoundPage';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
+import { server } from '../mocks/server';
 
 const routesConfig = createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
@@ -16,6 +17,10 @@ const routesConfig = createRoutesFromElements(
     <Route path="*" element={<NotFoundPage />} />
   </Route>,
 );
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe('App', () => {
   it('Ensure that the 404 page is displayed when navigating to an invalid route', () => {

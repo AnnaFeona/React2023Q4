@@ -18,4 +18,8 @@ export const handlers = [
     const result = mockBeerList.filter((item) => item.id.toString() === id);
     return HttpResponse.json(result);
   }),
+
+  http.get(`${API_BASE_URL}`, () => {
+    return HttpResponse.json(mockBeerList);
+  }),
 ];

@@ -17,11 +17,6 @@ export const Search: FC = () => {
   const location = useLocation();
   const [searchVal, setSearchVal] = useState(searchValue);
 
-  // useEffect(() => {
-  //   getSearchValue();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const getSearchValue = () => {
     const value = localStorage.getItem(searchKey) || '';
     setSearchVal(value);

@@ -50,7 +50,8 @@ export const Pagination: FC = () => {
   };
 
   const getTotalPages = () => {
-    return Math.ceil(data.length / itemsPerPage);
+    const pages = Math.ceil(data.length / itemsPerPage);
+    return pages > 1 ? pages : 1;
   };
 
   const saveChanges = () => {
@@ -73,20 +74,18 @@ export const Pagination: FC = () => {
   return (
     <>
       <h3>{data.length} found</h3>
-      {data.length !== 0 && (
-        <div className="pagination__container">
-          <div className="pagination__nav">
-            <Button title="Prev" onClick={toPrevPage} disabled={page === 1} />
-            <div className="pagination__index">
-              {page} of {getTotalPages()}
-            </div>
-            <Button title="Next" onClick={toNextPage} disabled={page === getTotalPages()} />
+      <div className="pagination__container">
+        <div className="pagination__nav">
+          <Button title="Prev" onClick={toPrevPage} disabled={page === 1} />
+          <div className="pagination__index">
+            {page} of {getTotalPages()}
           </div>
-          <div className="pagination__select">
-            <Select />
-          </div>
+          <Button title="Next" onClick={toNextPage} disabled={page === getTotalPages()} />
         </div>
-      )}
+        <div className="pagination__select">
+          <Select />
+        </div>
+      </div>
     </>
   );
 };
