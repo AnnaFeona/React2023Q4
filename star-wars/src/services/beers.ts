@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../model/constants';
 import { Beer } from '../model';
-// import { updateSearchString } from '../utils';
 
 export const beerApi = createApi({
   reducerPath: 'beersApi',
