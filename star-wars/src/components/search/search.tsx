@@ -6,11 +6,12 @@ import './search.scss';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { transformInputValue } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setPage, setSearchValue } from '../../store/pagination.slice';
+import { setPage } from '../../store/pagination.slice';
+import { setSearchValue } from '../../store/search.slice';
 
 export const Search: FC = () => {
   const searchKey = `${STORAGE_KEY_PREFFIX}_searchRequest`;
-  const searchValue = useAppSelector((state) => state.pagination.searchValue);
+  const searchValue = useAppSelector((state) => state.search.searchValue);
   const dispatch = useAppDispatch();
 
   const [, setSearchParams] = useSearchParams();

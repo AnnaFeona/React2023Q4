@@ -10,7 +10,7 @@ export const handlers = [
 
     if (perPage === '80') return HttpResponse.json(allBeers);
 
-    return HttpResponse.json(mockBeerList);
+    return HttpResponse.json(mockBeerList, { status: 200 });
   }),
 
   http.get(`${API_BASE_URL}/:id`, ({ params }) => {

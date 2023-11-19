@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { paginationReducer } from './pagination.slice';
-// import { searchReducer } from './search.slice';
+import { searchReducer } from './search.slice';
 import { beerApi } from '../services/beers';
 
 export const store = configureStore({
   reducer: {
     pagination: paginationReducer,
-    // search: searchReducer,
+    search: searchReducer,
     [beerApi.reducerPath]: beerApi.reducer,
   },
   middleware: (getDefaltMiddleware) => getDefaltMiddleware().concat(beerApi.middleware),

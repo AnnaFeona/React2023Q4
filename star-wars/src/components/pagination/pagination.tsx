@@ -7,15 +7,15 @@ import { Select } from '../select/select';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { decrement, increment } from '../../store/pagination.slice';
-import { useGetAllBeersQuery } from '../../services/beers';
+import { useGetBeerByNameQuery } from '../../services/beers';
 
 export const Pagination: FC = () => {
   const page = useAppSelector((state) => state.pagination.page);
   const itemsPerPage = useAppSelector((state) => state.pagination.itemsPerPage);
-  const searchValue = useAppSelector((state) => state.pagination.searchValue);
+  const searchValue = useAppSelector((state) => state.search.searchValue);
   const dispatch = useAppDispatch();
 
-  const { data = [] } = useGetAllBeersQuery(searchValue);
+  const { data = [] } = useGetBeerByNameQuery({ name: searchValue, perPage: 50 });
 
   const [, setSearchParams] = useSearchParams();
   const location = useLocation();

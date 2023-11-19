@@ -26,32 +26,6 @@ describe('CardList', () => {
     await waitFor(() => expect(screen.queryByTestId('loader')).toBeNull());
   });
 
-  // it('Check that an appropriate message is displayed if no cards are present.', async () => {
-  //   await act(async () => {
-  //     render(
-  //       <Provider store={store}>
-  //         <BrowserRouter>
-  //           <AppContextProvider>
-  //             <CardList />
-  //           </AppContextProvider>,
-  //         </BrowserRouter>
-  //       </Provider>,
-  //     );
-  //   });
-  //   expect(screen.getByText(/not found :\(/i)).toBeInTheDocument();
-  // });
-
-  // it('renders error state if fetch fails', async () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <BrowserRouter>
-  //         <CardList />
-  //       </BrowserRouter>
-  //     </Provider>,
-  //   );
-  //   await waitFor(() => expect(screen.getByText(/oups... something went wrong.../i)).toBeInTheDocument());
-  // });
-
   it('Verify that the component renders the specified number of cards', async () => {
     render(
       <Provider store={store}>

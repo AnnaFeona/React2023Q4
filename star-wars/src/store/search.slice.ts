@@ -5,11 +5,13 @@ import { Beer } from '../model';
 interface SearchState {
   searchValue: string;
   searchResult: Beer[];
+  isLoading: boolean;
 }
 
 const initialState: SearchState = {
   searchValue: '',
   searchResult: [],
+  isLoading: false,
 };
 
 export const searchSlice = createSlice({
@@ -22,9 +24,12 @@ export const searchSlice = createSlice({
     setSearchResult: (state, action: PayloadAction<Beer[]>) => {
       state.searchResult = [...action.payload];
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-// export const {  } = searchSlice.actions;
+export const { setSearchValue, setSearchResult, setIsLoading } = searchSlice.actions;
 
-// export const searchReducer = searchSlice.reducer;
+export const searchReducer = searchSlice.reducer;
