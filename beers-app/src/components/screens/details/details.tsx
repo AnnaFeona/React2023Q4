@@ -1,23 +1,21 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import style from './details.module.scss';
-import { Button } from '../../layout/button/button';
-import { Loader } from '../../layout/loader/loader';
-import { mockBeerList } from '../../../mocks/cardListMock';
+import { Button } from '../../components/button/button';
+import { Loader } from '../../components/loader/loader';
+import { useRouter } from 'next/router';
+import { useGetBerrByIdQuery } from '../../../services/beers';
 
 interface DetailsProps {
   id: number;
 }
 
 export const Details: FC<DetailsProps> = ({ id }) => {
-  // const { id } = useParams();
-  // const navigate = useNavigate();
-  // const { data = [], isLoading } = useGetBerrByIdQuery(id?.toString() || '');
-  const [isLoading] = useState(false);
-  const data = mockBeerList;
+  const router = useRouter();
+  const { data = [], isLoading } = useGetBerrByIdQuery(id?.toString() || '');
 
   const goBack = () => {
-    // navigate(-1);
+    router.push('/');
   };
 
   return (
@@ -28,13 +26,14 @@ export const Details: FC<DetailsProps> = ({ id }) => {
             <Loader />
           ) : (
             <div className={style.details__content}>
-              {data[id] && (
+              {!data[0] && <h2>Not found</h2>}
+              {data[0] && (
                 <>
                   <h2>
-                    {data[id].name} {id}
+                    {data[0].name} {id}
                   </h2>
-                  <div className={style.card__description}>{data[id].description}</div>
-                  <img className={style.details__image} src={data[id].image_url} alt="" />
+                  <div className={style.card__description}>{data[0].description}</div>
+                  <img className={style.details__image} src={data[0].image_url} alt="" />
                 </>
               )}
 

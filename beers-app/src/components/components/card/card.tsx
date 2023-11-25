@@ -3,17 +3,17 @@ import { FC } from 'react';
 import style from './card.module.scss';
 import { Button } from '../button/button';
 import { Beer } from '../../../model';
-// import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 export interface CardProps {
   beer: Beer;
 }
 export const Card: FC<CardProps> = ({ beer }) => {
-  const { name, description, image_url } = beer;
-  // const navigate = useNavigate();
+  const { id, name, description, image_url } = beer;
+  const router = useRouter();
 
   const handleClick = () => {
-    // navigate(`/details/${id}`);
+    router.push(`/details/${id}`);
   };
 
   return (

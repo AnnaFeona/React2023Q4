@@ -4,12 +4,13 @@
 .page {
   display: flex;
 }
+
 .logo {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
-.layout {
+.container {
   @include mx.wrapper(80%);
   flex-direction: column;
   padding: 5rem 3rem;
