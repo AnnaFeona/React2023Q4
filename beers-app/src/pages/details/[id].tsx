@@ -5,7 +5,7 @@ const DetailsPage = () => {
   const { query, pathname, asPath } = useRouter();
   console.log(query, pathname, asPath);
 
-  return <Details />;
+  return <Details id={Number(query.id)} />;
 };
 
 export default DetailsPage;

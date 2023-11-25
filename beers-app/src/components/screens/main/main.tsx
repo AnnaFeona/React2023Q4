@@ -1,21 +1,23 @@
 import { FC } from 'react';
-// import { Outlet } from 'react-router-dom';
 
-// import { CardList } from '../../components/cardList/cardList.tsx';
+import style from './main.module.scss';
+import { CardList } from '../../layout/cardList/cardList';
+import { Pagination } from '../../layout/pagination/pagination';
 
-import './main.scss';
-// import { Pagination } from '../../components/pagination/pagination.tsx';
+interface MainProps {
+  children: JSX.Element;
+}
 
-export const Main: FC = () => {
+export const Main: FC<MainProps> = ({ children }) => {
   return (
     <>
-      <div className="page">
-        {/* <Outlet /> */}
+      <div className={style.page}>
+        {children}
 
-        <div className="main-layout">
-          <h1 className="logo">ColdBeer</h1>
-          {/* <Pagination />
-          <CardList /> */}
+        <div className={style.layout}>
+          <h1 className={style.logo}>ColdBeer</h1>
+          <Pagination />
+          <CardList />
         </div>
       </div>
     </>

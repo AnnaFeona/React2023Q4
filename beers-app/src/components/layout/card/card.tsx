@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './card.scss';
+import style from './card.module.scss';
 import { Button } from '../button/button';
 import { Beer } from '../../../model';
 // import { useNavigate } from 'react-router-dom';
@@ -18,16 +18,16 @@ export const Card: FC<CardProps> = ({ beer }) => {
 
   return (
     <>
-      <div className="card">
-        <div className="card_info">
-          <h2 className="card__title">Name: {name}</h2>
-          <div className="card__description">
+      <div className={style.card}>
+        <div className={style.card_info}>
+          <h2 className={style.card__title}>Name: {name}</h2>
+          <div className={style.card__description}>
             <p>Description: {description}</p>
           </div>
-          <Button title="Show details" className="card__btn" onClick={handleClick} />
+          <Button title="Show details" className={style.card__btn} onClick={handleClick} />
         </div>
-        <div className="card_photo">
-          <img className="card__image" src={image_url} alt="" />
+        <div className={style.card_photo}>
+          <img className={style.card__image} src={image_url} alt="" />
         </div>
       </div>
     </>

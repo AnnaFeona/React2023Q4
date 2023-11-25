@@ -1,0 +1,9 @@
+@use '../../../styles/mixins' as mx;
+
+.main {
+  // @include mx.flex-center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+}

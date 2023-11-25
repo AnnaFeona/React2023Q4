@@ -1,5 +1,5 @@
-@use '../../styles/mixins' as mx;
-@use '../../styles/vars' as v;
+@use '../../../styles/mixins' as mx;
+@use '../../../styles/vars' as v;
 
 .card {
   display: flex;
@@ -10,10 +10,12 @@
   border-radius: 1rem;
   padding: 1rem;
 }
+
 .card_info {
   display: flex;
   flex-direction: column;
   width: 50%;
+  gap: 0.5rem;
 }
 
 .card_photo {
@@ -29,8 +31,8 @@
 
 .card__btn {
   max-width: 220px;
-}
 
-.card__btn:hover {
-  background-color: v.$accent-color;
+  &:hover {
+    background-color: v.$accent-color;
+  }
 }

@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent } from 'react';
 import { Button } from '../button/button';
 
-import './search.scss';
+import style from './search.module.scss';
 // import { useSearchParams } from 'next/navigation';
 // import { setPage } from '../../../../../star-wars/src/store/pagination.slice';
 // import { setSearchValue } from '../../../../../star-wars/src/store/search.slice';
@@ -58,9 +58,9 @@ export const Search: FC = () => {
 
   return (
     <>
-      <form onSubmit={saveSearchValue} className="header_form">
+      <form onSubmit={saveSearchValue} className={style.header_form}>
         <input
-          className="search__input"
+          className={style.search__input}
           type="text"
           onChange={handleChanges}
           // value={searchVal}

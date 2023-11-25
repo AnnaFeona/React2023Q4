@@ -1,5 +1,7 @@
 import { FC } from 'react';
-// import './layout.scss';
+import { Header } from '../../layout/header/header';
+// import style from './layout.module.scss';
+import { Main } from '../main/main';
 
 interface LayoutProps {
   children: JSX.Element;
@@ -8,7 +10,10 @@ interface LayoutProps {
 export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
-      <main className="main">{children}</main>
+      <Header />
+      {/* <main className={style.main}> */}
+      <Main>{children}</Main>
+      {/* </main> */}
     </>
   );
 };

@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-import './header.scss';
+import style from './header.module.scss';
 import { Search } from '../search/search';
 
 export const Header: FC = () => {
   return (
     <>
-      <header className="header">
+      <header className={style.header}>
         <Search />
       </header>
     </>

@@ -6,7 +6,7 @@ import { Loader } from '../../layout/loader/loader';
 import { mockBeerList } from '../../../mocks/cardListMock';
 
 interface DetailsProps {
-  id?: string;
+  id: number;
 }
 
 export const Details: FC<DetailsProps> = ({ id }) => {
@@ -28,13 +28,13 @@ export const Details: FC<DetailsProps> = ({ id }) => {
             <Loader />
           ) : (
             <div className={style.details__content}>
-              {data[0] && (
+              {data[id] && (
                 <>
                   <h2>
-                    {data[0].name} {id}
+                    {data[id].name} {id}
                   </h2>
-                  <div className={style.card__description}>{data[0].description}</div>
-                  <img className={style.details__image} src={data[0].image_url} alt="" />
+                  <div className={style.card__description}>{data[id].description}</div>
+                  <img className={style.details__image} src={data[id].image_url} alt="" />
                 </>
               )}
 
