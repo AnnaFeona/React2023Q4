@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react';
 import style from './select.module.scss';
 import { INITIAL_PAGE } from '../../../model/constants';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { setItemsPerPage, setPage } from '../../../store/pagination.slice';
+import { setItemsPerPage, setPage } from '../../../store/slices/pagination.slice';
 
 interface SelectProps {
   limit?: number;

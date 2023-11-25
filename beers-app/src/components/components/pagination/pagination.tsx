@@ -6,7 +6,7 @@ import { Button } from '../button/button';
 // import { useSearchParams } from 'next/navigation';
 import { useGetBeerByNameQuery } from '../../../services/beers';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { decrement, increment } from '../../../store/pagination.slice';
+import { decrement, increment } from '../../../store/slices/pagination.slice';
 import { Select } from '../select/select';
 
 export const Pagination: FC = () => {

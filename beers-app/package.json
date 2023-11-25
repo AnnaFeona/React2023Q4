@@ -49,6 +49,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "msw": "^2.0.8",
+    "next-redux-wrapper": "^8.1.0",
     "prettier": "^3.1.0",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4",

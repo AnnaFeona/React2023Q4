@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { INITIAL_LIMIT, INITIAL_PAGE } from '../model/constants';
+import { INITIAL_LIMIT, INITIAL_PAGE } from '../../model/constants';
 
 interface PaginationState {
   page: number;

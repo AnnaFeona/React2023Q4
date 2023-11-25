@@ -4,8 +4,8 @@ import { Button } from '../button/button';
 import style from './search.module.scss';
 import { INITIAL_PAGE } from '../../../model/constants';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { setPage } from '../../../store/pagination.slice';
-import { setSearchValue } from '../../../store/search.slice';
+import { setPage } from '../../../store/slices/pagination.slice';
+import { setSearchValue } from '../../../store/slices/search.slice';
 import { transformInputValue } from '../../../utils';
 
 export const Search: FC = () => {
@@ -24,8 +24,6 @@ export const Search: FC = () => {
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    console.log(value);
-
     setSearchVal(value || '');
   };
 

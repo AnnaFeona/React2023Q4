@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Beer } from '../model';
+import { Beer } from '../../model';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface SearchState {
   searchValue: string;
@@ -26,6 +27,12 @@ export const searchSlice = createSlice({
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      state.searchValue = action.payload.search.searchValue;
+      state.searchResult = action.payload.search.searchResult;
     },
   },
 });

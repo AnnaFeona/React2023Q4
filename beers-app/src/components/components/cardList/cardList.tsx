@@ -6,7 +6,7 @@ import { Loader } from '../loader/loader';
 import style from './cardList.module.scss';
 import { useGetBeerByNameQuery } from '../../../services/beers';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { setIsLoading, setSearchResult } from '../../../store/search.slice';
+import { setIsLoading, setSearchResult } from '../../../store/slices/search.slice';
 
 export const CardList: FC = () => {
   const searchValue = useAppSelector((state) => state.search.searchValue);
