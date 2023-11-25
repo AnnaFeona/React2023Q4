@@ -1,0 +1,15 @@
+@use '../../styles/mixins' as mx;
+@use '../../styles/vars' as v;
+
+.header_form {
+  @include mx.wrapper(80%);
+  justify-content: flex-end;
+  padding: 0.5rem;
+  gap: 5px;
+}
+
+.search__input {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.5rem;
+}
