@@ -1,6 +1,6 @@
 ## Week 1. React. Components
 
-### [task](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module04)
+### [task](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module05)
 
 ### [deploy](https://annafeona-rs-react-star-wars.netlify.app/)
 
@@ -9,9 +9,9 @@
 - HTML
 - Type Script
 - React
+- Next.JS
 - Redux
 - Scss
-- Vite
 - Prettier
 - Eslint
 - Husky
@@ -29,11 +29,11 @@ To get started with this project, follow these steps:
    ```
 2. Go to task branch:
    ```bash
-   $ git checkout task-4/redux-rtk
+   $ git checkout task-5/next
    ```
 3. Go to the project directory:
    ```bash
-   $ cd React2023Q4/star-wars
+   $ cd React2023Q4/beers-app
    ```
 4. Install the project dependencies (Node.js must be installed):
    ```bash
