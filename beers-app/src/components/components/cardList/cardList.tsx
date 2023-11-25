@@ -1,12 +1,19 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import style from './cardList.module.scss';
-import { useGetBeerByNameQuery } from '../../../services/beers';
-import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { setIsLoading, setSearchResult } from '../../../store/slices/search.slice';
+import { beerApi, useGetBeerByNameQuery } from '../../../services/beers';
+import { useAppSelector } from '../../../store/hooks';
+import { wrapper } from '../../../store/store';
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+  store.dispatch(beerApi.endpoints.getBeerByName.initiate({}));
+
+  Promise.all(store.dispatch(beerApi.util.getRunningQueriesThunk()));
+
+  return { props: {} };
+});
 
 export const CardList: FC = () => {
   const searchValue = useAppSelector((state) => state.search.searchValue);
@@ -17,15 +24,6 @@ export const CardList: FC = () => {
     page,
     perPage: itemsPerPage,
   });
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setIsLoading(isLoading || isFetching));
-  }, [isLoading, isFetching]);
-
-  useEffect(() => {
-    dispatch(setSearchResult(data || []));
-  }, [data]);
 
   return (
     <>

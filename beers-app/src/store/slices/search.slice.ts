@@ -6,13 +6,11 @@ import { HYDRATE } from 'next-redux-wrapper';
 interface SearchState {
   searchValue: string;
   searchResult: Beer[];
-  isLoading: boolean;
 }
 
 const initialState: SearchState = {
   searchValue: '',
   searchResult: [],
-  isLoading: false,
 };
 
 export const searchSlice = createSlice({
@@ -25,9 +23,6 @@ export const searchSlice = createSlice({
     setSearchResult: (state, action: PayloadAction<Beer[]>) => {
       state.searchResult = [...action.payload];
     },
-    setIsLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -37,6 +32,6 @@ export const searchSlice = createSlice({
   },
 });
 
-export const { setSearchValue, setSearchResult, setIsLoading } = searchSlice.actions;
+export const { setSearchValue, setSearchResult } = searchSlice.actions;
 
 export const searchReducer = searchSlice.reducer;

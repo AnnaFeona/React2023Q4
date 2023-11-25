@@ -15,5 +15,3 @@ export default function App({ Component, ...rest }: AppProps) {
     </Provider>
   );
 }
-
-// export default wrapper.withRedux(App);

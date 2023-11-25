@@ -3,7 +3,6 @@ import { FC, useEffect } from 'react';
 
 import style from './pagination.module.scss';
 import { Button } from '../button/button';
-// import { useSearchParams } from 'next/navigation';
 import { useGetBeerByNameQuery } from '../../../services/beers';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { decrement, increment } from '../../../store/slices/pagination.slice';
@@ -16,9 +15,6 @@ export const Pagination: FC = () => {
   const dispatch = useAppDispatch();
 
   const { data = [] } = useGetBeerByNameQuery({ name: searchValue, perPage: 50 });
-
-  // const [, setSearchParams] = useSearchParams();
-  // const location = useLocation();
 
   useEffect(() => {
     getTotalPages();
