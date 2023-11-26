@@ -26,13 +26,7 @@ export const Pagination: FC = () => {
 
   useEffect(() => {
     getTotalPages();
-    saveChanges();
   }, [page, itemsPerPage]);
-
-  useEffect(() => {
-    getTotalPages();
-    saveChanges();
-  }, [itemsPerPage]);
 
   const toPrevPage = () => {
     if (page > 1) {
@@ -48,23 +42,6 @@ export const Pagination: FC = () => {
   const getTotalPages = () => {
     const pages = Math.ceil(data.length / itemsPerPage);
     return pages > 1 ? pages : 1;
-  };
-
-  const saveChanges = () => {
-    // if (location.pathname === '/') {
-    //   if (searchValue !== '') {
-    //     setSearchParams({
-    //       beer_name: searchValue,
-    //       page: page.toString(),
-    //       per_page: itemsPerPage.toString(),
-    //     });
-    //   } else {
-    //     setSearchParams({
-    //       page: page.toString(),
-    //       per_page: itemsPerPage.toString(),
-    //     });
-    //   }
-    // }
   };
 
   return (

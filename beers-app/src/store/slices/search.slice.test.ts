@@ -1,4 +1,4 @@
-import { mockBeerList } from '../../mocks/cardListMock';
+import { mockBeerList } from '../../mocks/cardList.mock';
 import { searchReducer, setSearchValue, setSearchResult } from './search.slice';
 
 describe('searchSlice', () => {

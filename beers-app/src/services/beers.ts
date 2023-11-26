@@ -28,4 +28,8 @@ export const beerApi = createApi({
   }),
 });
 
-export const { useGetBeerByNameQuery, useGetBerrByIdQuery } = beerApi;
+export const {
+  useGetBeerByNameQuery,
+  useGetBerrByIdQuery,
+  util: { getRunningQueriesThunk },
+} = beerApi;

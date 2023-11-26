@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw';
 import { API_BASE_URL } from '../model/constants';
-import { allBeers, mockBeerList } from './cardListMock';
+import { allBeers, mockBeerList } from './cardList.mock';
 
 export const handlers = [
   http.get(`${API_BASE_URL}`, ({ request }) => {

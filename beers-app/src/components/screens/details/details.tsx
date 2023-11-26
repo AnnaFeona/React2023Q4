@@ -12,7 +12,7 @@ interface DetailsProps {
 
 export const Details: FC<DetailsProps> = ({ id }) => {
   const router = useRouter();
-  const { data = [], isLoading } = useGetBerrByIdQuery(id?.toString() || '');
+  const { data = [], isLoading } = useGetBerrByIdQuery(id?.toString() || '', {});
 
   const goBack = () => {
     router.push('/');

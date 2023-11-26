@@ -1,8 +1,4 @@
 import Head from 'next/head';
-// import Link from 'next/link';
-// import { CardList } from '../../layout/cardList/cardList';
-// import { Main } from '../main/main';
-// import Image from 'next/image';
 import './home.module.scss';
 
 const Home = () => {

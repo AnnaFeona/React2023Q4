@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Beer } from '../../model';
-import { HYDRATE } from 'next-redux-wrapper';
 
 interface SearchState {
   searchValue: string;
@@ -22,12 +21,6 @@ export const searchSlice = createSlice({
     },
     setSearchResult: (state, action: PayloadAction<Beer[]>) => {
       state.searchResult = [...action.payload];
-    },
-  },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      state.searchValue = action.payload.search.searchValue;
-      state.searchResult = action.payload.search.searchResult;
     },
   },
 });

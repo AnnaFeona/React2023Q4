@@ -3,19 +3,15 @@ import { Card } from '../card/card';
 import { Loader } from '../loader/loader';
 
 import style from './cardList.module.scss';
-import { beerApi, useGetBeerByNameQuery } from '../../../services/beers';
+import { useGetBeerByNameQuery } from '../../../services/beers';
 import { useAppSelector } from '../../../store/hooks';
-import { wrapper } from '../../../store/store';
+import { Beer } from '../../../model';
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-  store.dispatch(beerApi.endpoints.getBeerByName.initiate({}));
+interface CardlLisrProps {
+  beers?: Beer[];
+}
 
-  Promise.all(store.dispatch(beerApi.util.getRunningQueriesThunk()));
-
-  return { props: {} };
-});
-
-export const CardList: FC = () => {
+export const CardList: FC<CardlLisrProps> = () => {
   const searchValue = useAppSelector((state) => state.search.searchValue);
   const page = useAppSelector((state) => state.pagination.page);
   const itemsPerPage = useAppSelector((state) => state.pagination.itemsPerPage);
